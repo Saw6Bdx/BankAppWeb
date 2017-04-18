@@ -1,5 +1,6 @@
 package jfxui;
 
+import db.home.bank.Address;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,8 +16,13 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
-import projetJava.Holder;
+//import projetJava.Holder;
+import db.home.bank.Holder;
+import java.util.List;
 import projetJava.Login;
 import utils.Valid;
 
@@ -24,7 +30,7 @@ import utils.Valid;
  *  
  * @author Mary
  */
-public class NewUserWindowController {
+public class NewUserWindowController extends ControllerBase {
     
     @FXML private TextField txtName;
     @FXML private TextField txtFirstName;
@@ -36,6 +42,18 @@ public class NewUserWindowController {
     @FXML private PasswordField txtConfirmPwd;
     @FXML private Button btnCreate;
     @FXML private Button btnCancel;
+    
+    @Override
+    public void initialize(Mediator mediator) {
+        //
+	//List<Task> tasks = em.createQuery("SELECT t, u FROM Task t, User u WHERE u.id=t.utilisateur.id").getResultList();
+		
+	// Remplissage du tableview avec tasks
+	//this.listTasks.setItems(FXCollections.observableList(tasks));
+                
+        //  List<Task> tasks2 = em.createQuery("SELECT u FROM User u").getResultList();//em.createQuery("SELECT u FROM User u, Task t WHERE t.id_utilisateurs = u.id").getResultList();
+        //  this.listTasks.setItems(FXCollections.observableList(tasks2));
+    }
     
     @FXML
     private void handleBtnCreate(ActionEvent event) throws IOException {
@@ -56,6 +74,7 @@ public class NewUserWindowController {
             SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd");
             try {
                 Date d = dateParser.parse(birthday);
+                System.out.println("date convertie");
             } catch (ParseException ex) {
             }
         }
@@ -70,13 +89,28 @@ public class NewUserWindowController {
                     if ( Valid.isValidEmail(email) ) {
                         
                         // Creating Holder object
-                        Holder h = new Holder(name,firstName,phone,email,new Date(0));
+                        //Holder holder = new Holder(name,firstName,phone,email,new Date(0));
+                        Holder holder = new Holder(null,name,firstName,login,pwd);
+                        //Address adress = new Address()
                         
                         if (Valid.isValidPwd(pwd, pwdConfirm)) {
                             
                             // Creating Login object
                             Login l = new Login(login,pwd);
                             
+                            // Writing info into the database
+                            EntityManagerFactory emf = Persistence.createEntityManagerFactory("BankAppPU");
+                            EntityManager em = emf.createEntityManager();
+                           
+                            List list = em.createNamedQuery("Address.findAll").getResultList();
+                            
+                            
+                            em.getTransaction().begin();
+                            holder.setPhone(phone);
+                            holder.setIdAddress(((Address)list.get(1)));
+                            em.persist(holder);
+                            em.getTransaction().commit();
+                                    
                             // Going to the application main page
                             TitledPane loader = (TitledPane)FXMLLoader.load(getClass().getResource("AppWindow.fxml"));
                             Scene scene = new Scene(loader);
