@@ -22,7 +22,7 @@ import javax.persistence.Persistence;
 
 //import projetJava.Holder;
 import db.home.bank.Holder;
-import java.util.List;
+import db.home.bank.Postcode;
 import projetJava.Login;
 import utils.Valid;
 
@@ -37,6 +37,10 @@ public class NewUserWindowController extends ControllerBase {
     @FXML private TextField txtPhone;
     @FXML private TextField txtEmail;
     @FXML private DatePicker txtBirthday;
+    @FXML private TextField txtAddressLine1;
+    @FXML private TextField txtAddressLine2;
+    @FXML private TextField txtPostCode;
+    @FXML private TextField txtCity;
     @FXML private TextField txtLogin;
     @FXML private PasswordField txtPwd;
     @FXML private PasswordField txtConfirmPwd;
@@ -64,6 +68,11 @@ public class NewUserWindowController extends ControllerBase {
         String email = txtEmail.getText();
         String birthday = txtBirthday.getEditor().getText();
         
+        String addLine1 = txtAddressLine1.getText();
+        String addLine2 = txtAddressLine2.getText();
+        String postCode = txtPostCode.getText();
+        String city = txtCity.getText();
+        
         String login = txtLogin.getText();
         String pwd = txtPwd.getText();
         String pwdConfirm = txtConfirmPwd.getText();
@@ -74,7 +83,6 @@ public class NewUserWindowController extends ControllerBase {
             SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd");
             try {
                 Date d = dateParser.parse(birthday);
-                System.out.println("date convertie");
             } catch (ParseException ex) {
             }
         }
@@ -88,43 +96,61 @@ public class NewUserWindowController extends ControllerBase {
                 if ( Valid.isValidPhoneNumber(phone) ) {
                     if ( Valid.isValidEmail(email) ) {
                         
-                        // Creating Holder object
-                        //Holder holder = new Holder(name,firstName,phone,email,new Date(0));
-                        Holder holder = new Holder(null,name,firstName,login,pwd);
-                        //Address adress = new Address()
-                        
-                        if (Valid.isValidPwd(pwd, pwdConfirm)) {
-                            
-                            // Creating Login object
-                            Login l = new Login(login,pwd);
-                            
-                            // Writing info into the database
-                            EntityManagerFactory emf = Persistence.createEntityManagerFactory("BankAppPU");
-                            EntityManager em = emf.createEntityManager();
-                           
-                            List list = em.createNamedQuery("Address.findAll").getResultList();
-                             
-                            
-                            em.getTransaction().begin(); 
-                            holder.setPhone(phone);
-                            holder.setIdAddress(((Address)list.get(1)));
-                            em.persist(holder);
-                            em.getTransaction().commit();
+                        if ( Valid.isValidAddress(addLine1) ) {
+                            if ( Valid.isValidPostCode(postCode) ) {
+                                if ( Valid.isValidCity(city) ) {
                                     
-                            // Going to the application main page
-                            TitledPane loader = (TitledPane)FXMLLoader.load(getClass().getResource("AppWindow.fxml"));
-                            Scene scene = new Scene(loader);
-                            Stage stage = new Stage();
-                            stage.setScene(scene);
-                            stage.show();
+                                    if (Valid.isValidPwd(pwd, pwdConfirm)) {
+                            
+                                        // All the fields are correct, then it is possible to create objects
+                                        Postcode postcode = new Postcode(null,Integer.parseInt(postCode),city);
+                                        Address address = new Address(null,addLine1);
+                                        Holder holder = new Holder(null,name,firstName,login,pwd);
+    
+                                        Login l = new Login(login,pwd);
 
-                            //Close current window
-                            Stage current = (Stage)btnCreate.getScene().getWindow();
-                            current.close();
+                                        // Writing info into the database
+                                        EntityManagerFactory emf = Persistence.createEntityManagerFactory("BankAppPU");
+                                        EntityManager em = emf.createEntityManager();
+
+                                        em.getTransaction().begin(); 
+                                        em.persist(postcode);
+                                        address.setIdPostcode(postcode);
+                                        if (!addLine2.isEmpty()) {
+                                            address.setLine2(addLine2);
+                                        }    
+                                        em.persist(address);
+                                        holder.setPhone(phone);
+                                        holder.setIdAddress(address);
+                                        em.persist(holder);
+                                        em.getTransaction().commit();
+
+                                        // Going to the application main page
+                                        TitledPane loader = (TitledPane)FXMLLoader.load(getClass().getResource("AppWindow.fxml"));
+                                        Scene scene = new Scene(loader);
+                                        Stage stage = new Stage();
+                                        stage.setScene(scene);
+                                        stage.show();
+
+                                        //Close current window
+                                        Stage current = (Stage)btnCreate.getScene().getWindow();
+                                        current.close();
                         
+                                    }
+                                    else {
+                                        alertMessage("password","password and its confirmation do not match");
+                                    }
+                                }
+                                else {
+                                    alertMessage("city","Only letters, apostrophe and hyphen allowed");
+                                }
+                            }
+                            else {
+                                alertMessage("postCode","Cannot be empty");
+                            }
                         }
                         else {
-                            alertMessage("password","password and its confirmation do not match");
+                            alertMessage("First line address","Cannot be empty");
                         }
                     }
                     else {
@@ -133,7 +159,6 @@ public class NewUserWindowController extends ControllerBase {
                 }
                 else {
                     alertMessage("phone","Characters allowed : numbers and +");
-                    System.out.println("Wrong phone");
                 }
             }
             else {
@@ -181,16 +206,9 @@ public class NewUserWindowController extends ControllerBase {
      * and closes the New User Window.
      */
     private void handleBtnCancel(ActionEvent event) throws IOException {
-        
-        // Going back to the Login window
-        TitledPane loader = (TitledPane)FXMLLoader.load(getClass().getResource("LoginWindow.fxml"));
-        Scene scene = new Scene(loader);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
-        
+
         //Close current window
-        Stage current = (Stage)btnCreate.getScene().getWindow();
+        Stage current = (Stage)btnCancel.getScene().getWindow();
         current.close();
         
     }

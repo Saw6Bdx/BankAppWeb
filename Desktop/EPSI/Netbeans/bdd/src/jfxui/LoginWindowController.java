@@ -3,32 +3,37 @@ package jfxui;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
-public class LoginWindowController {   
+public class LoginWindowController extends ControllerBase{   
     @FXML private TextField labelLogin;
     @FXML private PasswordField labelPassword;
-	
+    
+    @Override
+    public void initialize(Mediator mediator){
+    }
+    
     @FXML
     private void handleLoginWindowLogin(ActionEvent event) throws IOException{
-        if(labelLogin.getText().equals("Login") && labelPassword.getText().equals("26929999")){
-            TitledPane loader = (TitledPane)FXMLLoader.load(getClass().getResource("FXML.fxml"));
-            Scene scene = new Scene(loader);
+        if(labelLogin.getText().equals("Login") && labelPassword.getText().equals("0000")){
+            this.emf = Persistence.createEntityManagerFactory("BankAppPU");
+            this.mediator = new Mediator(this.emf);
+            
+            Scene scene = new Scene(ControllerBase.loadFxml("AppWindow.fxml", mediator));
+            //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.show();
             //Hide current window
             ((Node)(event.getSource())).getScene().getWindow().hide();
-            //System.out.print("Pwd OK");
-            //System.out.print("Login OK");
         }
         else{
             new Alert(AlertType.ERROR, "Login or pwd are invalid").showAndWait();
@@ -45,13 +50,17 @@ private void handleMenuFileQuit(ActionEvent event){
         
     @FXML
     private void handleLoginWindowCreate(ActionEvent event) throws IOException{
-            TitledPane loader = (TitledPane)FXMLLoader.load(getClass().getResource("NewUserWindow.fxml"));
-            Scene scene = new Scene(loader);
+            this.emf = Persistence.createEntityManagerFactory("BankAppPU");
+            this.mediator = new Mediator(this.emf);
+            
+            Scene scene = new Scene(ControllerBase.loadFxml("NewUserWindow.fxml", mediator));
             Stage stage = new Stage();
-            stage.setResizable(false);
             stage.setScene(scene);
             stage.show();
             //Hide current window
-            ((Node)(event.getSource())).getScene().getWindow().hide();
+            //((Node)(event.getSource())).getScene().getWindow().hide();
     }
+    
+    private Mediator mediator = null;
+    private EntityManagerFactory emf = null;
 }

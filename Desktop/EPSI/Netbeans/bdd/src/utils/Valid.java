@@ -73,6 +73,45 @@ public class Valid {
         return false;
     }
     
+    
+    /**
+     * Method which checks if the address is not empty
+     * @param address, the field to be checked 
+     * @return true if the field is not empty, false otherwise
+     */
+    public static boolean isValidAddress(String address) {
+        if (!address.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Method which checks if the postcode is not empty
+     * @postcode, the field to be checked 
+     * @return true if the field is not empty, false otherwise
+     */
+    public static boolean isValidPostCode(String postCode) {
+        if (!postCode.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+    
+    
+    /**
+     * Method which checks if the city is not empty
+     * @city, the field to be checked 
+     * @return true if the field is not empty, false otherwise
+     */
+    public static boolean isValidCity(String city) {
+        if ( city.matches("[a-zA-Z]+") || city.matches("[a-zA-Z]+('[a-zA-Z]+)") || city.matches("[a-zA-Z]+(-[a-zA-Z]+)") ) {
+            return true;
+        }
+        return false;
+    }
+    
+    
     /**
      * Method which checks if the password and its confirmation match
      * @param pwd, pwdConfirmation the field to be checked

@@ -1,15 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<TitledPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="jfxui.AppWindowController">
-    <content>
-        <AnchorPane>
-            <children>
-                <TextField layoutX="201.0" layoutY="134.0" text="To be implemented ... :-)" />
-            </children>
-        </AnchorPane>
-    </content>
+<TitledPane animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" text="BankApp" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxui.AppWindowController">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="374.0" prefWidth="570.0">
+         <children>
+            <MenuBar layoutX="-1.0" prefHeight="29.0" prefWidth="600.0" AnchorPane.rightAnchor="-1.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuFileNewUser" text="New user..." />
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuFileChangeUser" text="Change user..." />
+                        <MenuItem mnemonicParsing="false" text="Modify user profile..." />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Export my data..." />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Preferences..." />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit/Manage">
+                  <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuEditNewAccount" text="New account..." />
+                        <MenuItem mnemonicParsing="false" text="Delete account" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Modify account manager..." />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Cancel" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="My transactions">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="New transaction..." />
+                        <MenuItem mnemonicParsing="false" text="Delete transaction" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Cancel" />
+                  </items>
+                </Menu>
+                  <Menu mnemonicParsing="false" text="My budget">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="My categories..." />
+                        <MenuItem mnemonicParsing="false" text="New category..." />
+                        <MenuItem mnemonicParsing="false" text="Delete category" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Cancel" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="My favorites">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Help">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Contact" />
+                        <MenuItem mnemonicParsing="false" text="About" />
+                     </items>
+                  </Menu>
+              </menus>
+            </MenuBar>
+            <SplitPane dividerPositions="0.2491638795986622" layoutY="28.0" prefHeight="345.0" prefWidth="600.0" AnchorPane.leftAnchor="-9.600000000000023" AnchorPane.rightAnchor="-2.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="343.0" prefWidth="205.0">
+                     <children>
+                        <VBox layoutX="-1.0" layoutY="-1.0" AnchorPane.bottomAnchor="208.0" AnchorPane.leftAnchor="-1.0" AnchorPane.topAnchor="-1.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#handleButtonAccountCurrent" prefHeight="68.0" prefWidth="147.0" text="Compte Courant" />
+                              <Button mnemonicParsing="false" onAction="#handleButtonAccountSaving" prefHeight="68.0" prefWidth="147.0" text="Compte Epargne" />
+                           </children>
+                        </VBox>
+                     </children></AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="263.0" prefWidth="441.0">
+                     <children>
+                        <SplitPane dividerPositions="0.18128654970760233" orientation="VERTICAL" prefHeight="344.0" prefWidth="450.0">
+                          <items>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="65.0" prefWidth="444.0" />
+                            <AnchorPane fx:id="content" minHeight="0.0" minWidth="0.0" prefHeight="276.0" prefWidth="453.0" />
+                          </items>
+                        </SplitPane>
+                     </children></AnchorPane>
+              </items>
+            </SplitPane>
+         </children></AnchorPane>
+  </content>
 </TitledPane>
