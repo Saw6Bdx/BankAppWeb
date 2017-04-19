@@ -32,4 +32,4 @@
             <Button fx:id="btnCancel" layoutX="272.0" layoutY="375.0" mnemonicParsing="false" onAction="#handleBtnCancel" prefHeight="27.0" prefWidth="74.0" text="Cancel" />
          </children></AnchorPane>
   </content>
-</TitledPane>
+</TitledPane> 

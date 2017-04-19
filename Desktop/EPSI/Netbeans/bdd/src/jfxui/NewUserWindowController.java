@@ -103,7 +103,7 @@ public class NewUserWindowController extends ControllerBase {
                             EntityManager em = emf.createEntityManager();
                            
                             List list = em.createNamedQuery("Address.findAll").getResultList();
-                            
+                             
                             
                             em.getTransaction().begin();
                             holder.setPhone(phone);
