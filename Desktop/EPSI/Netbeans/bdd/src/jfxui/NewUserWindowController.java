@@ -105,7 +105,7 @@ public class NewUserWindowController extends ControllerBase {
                             List list = em.createNamedQuery("Address.findAll").getResultList();
                              
                             
-                            em.getTransaction().begin();
+                            em.getTransaction().begin(); 
                             holder.setPhone(phone);
                             holder.setIdAddress(((Address)list.get(1)));
                             em.persist(holder);
