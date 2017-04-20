@@ -51,8 +51,8 @@ public class AppWindowController extends ControllerBase{
     private void handleMenuFileNewUser(ActionEvent event) throws IOException {
         this.emf = Persistence.createEntityManagerFactory("BankAppPU");
         this.mediator = new Mediator(this.emf);
-        
-        Scene scene = new Scene(ControllerBase.loadFxml("NewUserWindow.fxml", mediator));
+        ControllerBase controller = ControllerBase.loadFxml("NewUserWindow.fxml", this.mediator);
+        Scene scene = new Scene(controller.getParent());
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
@@ -64,13 +64,13 @@ public class AppWindowController extends ControllerBase{
     private void handleMenuEditNewAccount(ActionEvent event) throws IOException {
         this.emf = Persistence.createEntityManagerFactory("BankAppPU");
         this.mediator = new Mediator(this.emf);
-        
-        Scene scene = new Scene(ControllerBase.loadFxml("NewAccountWindow.fxml", mediator));
+        ControllerBase controller = ControllerBase.loadFxml("NewAccountWindow_page1.fxml", this.mediator);
+        Scene scene = new Scene(controller.getParent());
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
         //Hide current window, ne fonctionne pas, à voir plus tard
-        ((Node)(event.getSource())).getScene().getWindow().hide();
+        //((Node)(event.getSource())).getScene().getWindow().hide();
 
         // New "account" button in the AppWindow
         // TO BE IMPLEMENTED ...
@@ -82,7 +82,7 @@ public class AppWindowController extends ControllerBase{
         this.mediator = new Mediator(this.emf);
         
         //Scene scene = new Scene(ControllerBase.loadFxml("TransactionsWindow.fxml", mediator));
-        content.getChildren().setAll(loadFxml("TransactionsWindow.fxml"));// appeler le TransactionsWindow du compte correspondant au bouton
+        content.getChildren().setAll(loadFxml("TransactionsWindow.fxml").getParent());// appeler le TransactionsWindow du compte correspondant au bouton
         //Stage stage = new Stage();
         //stage.setScene(scene);
         //stage.show();
@@ -93,7 +93,8 @@ public class AppWindowController extends ControllerBase{
         this.emf = Persistence.createEntityManagerFactory("BankAppPU");
         this.mediator = new Mediator(this.emf);
         
-        Scene scene = new Scene(ControllerBase.loadFxml("TransactionsWindow.fxml", mediator));
+        ControllerBase controller = ControllerBase.loadFxml("TransactionsWindow.fxml", mediator);
+        Scene scene = new Scene(controller.getParent());
         // appeler le TransactionsWindow du compte correspondant au bouton
         Stage stage = new Stage();
         stage.setScene(scene);

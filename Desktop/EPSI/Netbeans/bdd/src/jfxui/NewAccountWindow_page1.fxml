@@ -10,7 +10,7 @@
 <?import javafx.collections.*?>
 <?import java.lang.String?>
 
-<TitledPane alignment="CENTER" animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="400.0" text="New Account" textAlignment="CENTER" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxui.NewAccountWindowController">
+<TitledPane alignment="CENTER" animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="400.0" text="New Account" textAlignment="CENTER" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxui.NewAccountWindow_page1Controller">
 <content>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="590.0" prefWidth="383.0">
          <children>

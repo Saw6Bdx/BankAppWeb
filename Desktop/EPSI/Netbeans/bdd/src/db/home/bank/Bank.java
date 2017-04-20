@@ -113,7 +113,7 @@ public class Bank implements Serializable {
 
     @Override
     public String toString() {
-        return "db.home.bank.Bank[ id=" + id + " ]";
+        return this.name;
     }
     
 }

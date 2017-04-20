@@ -32,9 +32,15 @@ public class Check {
         }
     }
     
-    public static void checkLetters(String field, String nameField) {    
+    /*public static void checkLetters(String field, String nameField) {    
         if ( !Valid.isValidLetters(field, nameField) ) {
             throw new IllegalArgumentException(String.format("%s is wrong",nameField));
+       }   
+    }*/
+    
+    public static void checkLetters(String field, String name) {    
+        if ( !Valid.isValidOnlyLetters(field) ) {
+            throw new IllegalArgumentException(String.format("%s is wrong",name));
        }   
     }
    
