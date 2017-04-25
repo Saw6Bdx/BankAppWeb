@@ -83,4 +83,70 @@ public class NewAccountWindowController extends ControllerBase {
         this.agency = agency;
     }
     
+    
+    public int idAccountType(String str) {
+        int id = 0;
+        switch (str) {
+            case "Current":
+                id = 1;
+                break;
+            case "Savings":
+                id = 2;
+                break;
+        }
+        return id;
+    }
+    
+    
+    public int idCountryCode(String str) {
+        int id = 1;
+        switch (str) {
+            case "FR":
+                id = 1;
+                break;
+            case "CH":
+                id = 2;
+                break;
+            case "DE":
+                id = 3;
+                break;
+            case "GB":
+                id = 4;
+                break;
+            case "BS":
+                id = 5;
+                break;
+            case "KY":
+                id = 6;
+                break;
+            case "PA":
+                id = 7;
+                break;
+        }
+        return id;
+    }
+    
+    
+    public int idBank(String str) {
+        int id = 0;
+        switch (str) {
+            case "BNP Paribas":
+                id = 1;
+                break;
+            case "Caisse Epargne":
+                id = 2;
+                break;
+            case "HSBC France":
+                id = 3;
+                break;
+            case "CIC":
+                id = 4;
+                break;
+            case "La Banque Postale":
+                id = 5;
+                break;
+        }
+        return id;
+    }
+    
 }

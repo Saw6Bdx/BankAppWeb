@@ -16,7 +16,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import utils.AlertMessage;
 import static utils.DateUtils.LocalDate2Date;
@@ -84,12 +83,12 @@ public class NewAccountWindow_page1Controller extends NewAccountWindowController
                 if ( Valid.isValidDouble(accountBalance) ) { // double
                     if ( Valid.isValidDouble(accountOverdraft) ) { // double
                    
-                        // Temporary back-up 
+                        // Saving informations ... 
                         
                         // ... table ACCOUNT
                         Account accountObj = new Account();
                         accountObj.setNumber(accountNumber);
-                        accountObj.setCreationDate(new Date(0));//accountCreationDate;
+                        accountObj.setCreationDate(accountCreationDate);
                         accountObj.setFirstBalance(Double.parseDouble(accountBalance));
                         accountObj.setOverdraft(Double.parseDouble(accountOverdraft));
                         if (!accountInterestRate.isEmpty() && Valid.isValidDouble(accountInterestRate)) {
@@ -110,7 +109,7 @@ public class NewAccountWindow_page1Controller extends NewAccountWindowController
                         // Going to the next "new account" window
                         NewAccountWindow_page2Controller controller = (NewAccountWindow_page2Controller)ControllerBase.loadFxml(
                                 "NewAccountWindow_page2.fxml", 
-                                new Mediator(Persistence.createEntityManagerFactory("BankAppPU"))
+                                getMediator()
                         );
                         controller.setAccount(accountObj);
                         controller.setAccountType(accountTypeObj);

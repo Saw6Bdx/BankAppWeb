@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
  * @author Guillaume
  *
  */
-public class Tools {
+public class Tools { 
 
 	/**
 	 * Static Pattern type variable that contains the Regex of a valide email. (xxx@yyy.zz)

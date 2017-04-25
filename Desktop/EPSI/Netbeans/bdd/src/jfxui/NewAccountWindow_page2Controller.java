@@ -20,7 +20,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import utils.AlertMessage;
 import utils.Valid;
@@ -41,22 +40,6 @@ public class NewAccountWindow_page2Controller extends NewAccountWindowController
     @FXML private TextField txtAgencyCity;
     @FXML private Button btnPrevious;
     @FXML private Button btnNext;
-
-    /*private Account account;
-    private AccountType accountType;
-    private CountryCode countryCode;
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
-    public void setAccountType(AccountType accountType) {
-        this.accountType = accountType;
-    }
-
-    public void setCountryCode(CountryCode countryCode) {
-        this.countryCode = countryCode;
-    }*/
 
     @Override
     public void initialize(Mediator mediator) {
@@ -87,14 +70,13 @@ public class NewAccountWindow_page2Controller extends NewAccountWindowController
 
         // Check the fields
         if (Valid.isValidOnlyLetters(agencyName)) { // que des lettres + hyphen + apostrophe
-            if (Valid.isValidOnlyNumber(agencyCode)) { // que des chiffres 
+            if (Valid.isValidOnlyNumber(agencyCode) && agencyCode.length()==5 ) { // que des chiffres et 5 caractères
                 if (Valid.isValidOnlyNumber(bankCode)) { // que des chiffres 
                     if (Valid.isValidAddress(agencyAddressLine1)) {
                         if (Valid.isValidPostCode(agencyPostCode)) {
                             if (Valid.isValidOnlyLetters(agencyCity)) {
 
                                 // Temporary back-up 
-                                System.out.println(getAccountType().getType());
                                 
                                 // ... table AGENCY
                                 Agency agencyObj = new Agency();
@@ -119,18 +101,34 @@ public class NewAccountWindow_page2Controller extends NewAccountWindowController
                                 postCodeObj.setPostcode(Integer.parseInt(agencyPostCode));
                                 
                                 // Going to the next "new account" window
-                                /*NewAccountWindow_page3Controller controller = (NewAccountWindow_page3Controller) ControllerBase.loadFxml(
+                                NewAccountWindow_page3Controller controller = (NewAccountWindow_page3Controller) ControllerBase.loadFxml(
                                         "NewAccountWindow_page3.fxml",
-                                        new Mediator(Persistence.createEntityManagerFactory("BankAppPU"))
-                                );*/
-                                NewAccountWindow_page3Controller controller = (NewAccountWindow_page3Controller)ControllerBase.loadFxml("NewAccountWindow_page3.fxml");
+                                        getMediator()
+                                );
+                                
+                                // Transfer informations of Controller 1
+                                AccountType accountTypeObj = new AccountType(null);
+                                accountTypeObj.setType(getAccountType().getType());
+                                controller.setAccountType(accountTypeObj);
+
+                                Account accountObj = new Account(null, getAccount().getNumber(), getAccount().getCreationDate(),
+                                        getAccount().getFirstBalance(), getAccount().getOverdraft());
+                                if (getAccount().getInterestRate() != null) {
+                                    accountObj.setInterestRate(getAccount().getInterestRate());
+                                }
+                                if (getAccount().getDescription() != null) {
+                                    accountObj.setDescription(getAccount().getDescription());
+                                }
+                                accountObj.setIdAccountType(accountTypeObj);
+                                controller.setAccount(accountObj);
+                                
+                                controller.setCountryCode(new CountryCode(null, getCountryCode().getCode()));
+                                
+                                // Saving informations of Controller 2
                                 controller.setAddress(addressObj);
                                 controller.setBank(bankObj);
                                 controller.setPostcode(postCodeObj);
                                 controller.setAgency(agencyObj);
-                                /*controller.setAccount(this.account);
-                                controller.setAccountType(this.accountType);
-                                controller.setCountryCode(this.countryCode);*/
                                         
                                 Scene scene = new Scene(controller.getParent());
                                 Stage stage = new Stage();

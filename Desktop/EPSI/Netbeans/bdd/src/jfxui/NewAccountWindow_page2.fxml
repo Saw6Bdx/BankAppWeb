@@ -28,6 +28,7 @@
             <TextField fx:id="txtAgencyCity" layoutX="146.0" layoutY="343.0" prefHeight="25.0" prefWidth="210.0" promptText="City" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="40.0" />
             <Button fx:id="btnPrevious" layoutX="168.0" layoutY="411.0" mnemonicParsing="false" onAction="#handleBtnPrevious" prefHeight="27.0" prefWidth="104.0" text="&lt; Previous" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="130.0" />
             <Button fx:id="btnNext" layoutX="272.0" layoutY="411.0" mnemonicParsing="false" onAction="#handleBtnNext" prefHeight="27.0" prefWidth="96.0" text="Next &gt;" AnchorPane.leftAnchor="260.0" AnchorPane.rightAnchor="40.0" />
+            <Button layoutX="358.0" layoutY="101.0" mnemonicParsing="false" text="+" />
          </children></AnchorPane>
   </content> 
 </TitledPane>

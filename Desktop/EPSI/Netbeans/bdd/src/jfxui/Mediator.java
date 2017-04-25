@@ -12,7 +12,7 @@ import javax.persistence.EntityManagerFactory;
  *
  * @author Guest
  */
-public class Mediator {
+public class Mediator { 
     
     public Mediator(EntityManagerFactory emf) {
         if (emf == null) {

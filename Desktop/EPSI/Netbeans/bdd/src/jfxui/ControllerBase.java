@@ -34,9 +34,11 @@ public abstract class ControllerBase {
     public Mediator getMediator() {
         return this.mediator;
     }
+    
     public Parent getParent() {
         return this.parent;
-    }
+    } 
+    
     public ControllerBase loadFxml(String fxml) throws IOException {
         return loadFxml(fxml, this.mediator);
     }

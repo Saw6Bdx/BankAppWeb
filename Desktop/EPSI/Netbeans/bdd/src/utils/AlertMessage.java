@@ -19,7 +19,7 @@ public class AlertMessage {
         new Alert(
                 Alert.AlertType.WARNING,
                 String.format("Invalid %s format\n %s",field,message)
-        ).showAndWait();
+        ).showAndWait(); 
     }
     
     public static void processPersistenceException(PersistenceException e) {

@@ -97,8 +97,7 @@ public class Postcode implements Serializable {
 
     @Override
     public String toString() {
-        //return this.id;
-        return "db.home.bank.Postcode[ id=" + id + " ]";
+        return (this.postcode + " " + this.city);
     }
     
 }

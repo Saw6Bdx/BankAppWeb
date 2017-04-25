@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="65.0" prefWidth="444.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+            xmlns="http://javafx.com/javafx/8.0.111" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="jfxui.ContactWindowController">
+   <children>
+      <Label fx:id="labelBank" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0" />
+      <Label fx:id="labelAgency" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="24.0" />
+      <Label fx:id="labelAddress" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="44.0" />
+      <Label fx:id="labelManager" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0" />
+      <Label fx:id="labelPhone" text="Phone" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="24.0" />
+      <Label fx:id="labelEmail" text="Email" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="44.0" />
+   </children>
+</AnchorPane>

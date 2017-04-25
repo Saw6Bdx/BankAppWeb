@@ -27,7 +27,7 @@ public class LoginWindowController extends ControllerBase{
             this.emf = Persistence.createEntityManagerFactory("BankAppPU");
             this.mediator = new Mediator(this.emf);
             
-            ControllerBase controller = ControllerBase.loadFxml("AppWindow.fxml", mediator);
+            ControllerBase controller = (AppWindowController)ControllerBase.loadFxml("AppWindow.fxml", mediator);
             Scene scene = new Scene(controller.getParent());
             //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             Stage stage = new Stage();
@@ -54,13 +54,13 @@ private void handleMenuFileQuit(ActionEvent event){
             this.emf = Persistence.createEntityManagerFactory("BankAppPU");
             this.mediator = new Mediator(this.emf);
             
-            ControllerBase controller = ControllerBase.loadFxml("NewUserWindow.fxml", mediator);
+            ControllerBase controller = (NewUserWindowController)ControllerBase.loadFxml("NewUserWindow.fxml", mediator);
             Scene scene = new Scene(controller.getParent());
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.show();
             //Hide current window
-            //((Node)(event.getSource())).getScene().getWindow().hide();
+            ((Node)(event.getSource())).getScene().getWindow().hide();
     }
     
     private Mediator mediator = null;

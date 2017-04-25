@@ -134,7 +134,7 @@ public class Address implements Serializable {
 
     @Override
     public String toString() {
-        return "db.home.bank.Address[ id=" + id + " ]";
+        return (this.line1 + "\n                 " + this.line2);
     }
     
 }

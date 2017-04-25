@@ -6,7 +6,6 @@
 package utils;
 
 import java.util.Date;
-import javafx.scene.control.Alert;
 
 /**
  *
@@ -31,12 +30,6 @@ public class Check {
             throw new NullPointerException(String.format("%s cannot be null",name));
         }
     }
-    
-    /*public static void checkLetters(String field, String nameField) {    
-        if ( !Valid.isValidLetters(field, nameField) ) {
-            throw new IllegalArgumentException(String.format("%s is wrong",nameField));
-       }   
-    }*/
     
     public static void checkLetters(String field, String name) {    
         if ( !Valid.isValidOnlyLetters(field) ) {

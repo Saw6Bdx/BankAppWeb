@@ -20,25 +20,19 @@ import javax.persistence.Persistence;
  */
 
 public class AppWindowController extends ControllerBase{
-    @FXML
-    private AnchorPane content;
+    @FXML private AnchorPane content;
+    @FXML private AnchorPane contact;
     
     @Override
     public void initialize(Mediator mediator){
-        /*try{
-            //Le mettre dans 'content'
-            //content.getChildren().setAll(loadFxml("TransactionsWindow.fxml"));
-	}
-	catch(IOException e){
-            
-	}*/
     }
 
     @FXML
     private void handleMenuFileChangeUser(ActionEvent event) throws IOException {
         this.emf = Persistence.createEntityManagerFactory("BankAppPU");
         this.mediator = new Mediator(this.emf);
-        ControllerBase controller = ControllerBase.loadFxml("AppWindow.fxml", mediator);
+        
+        ControllerBase controller = ControllerBase.loadFxml("LoginWindow.fxml", mediator);
         Scene scene = new Scene(controller.getParent());
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -47,18 +41,20 @@ public class AppWindowController extends ControllerBase{
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }
     
-    @FXML
+@FXML
     private void handleMenuFileNewUser(ActionEvent event) throws IOException {
         this.emf = Persistence.createEntityManagerFactory("BankAppPU");
         this.mediator = new Mediator(this.emf);
-        ControllerBase controller = ControllerBase.loadFxml("NewUserWindow.fxml", this.mediator);
+        
+        ControllerBase controller = ControllerBase.loadFxml("NewUserWindow.fxml", mediator);
         Scene scene = new Scene(controller.getParent());
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
         //Hide current window, ne fonctionne pas, à voir plus tard
-       // ((Node)(event.getSource())).getScene().getWindow().hide();
+        ((Node)(event.getSource())).getScene().getWindow().hide();
     }
+    
     
     @FXML
     private void handleMenuEditNewAccount(ActionEvent event) throws IOException {
@@ -81,26 +77,50 @@ public class AppWindowController extends ControllerBase{
         this.emf = Persistence.createEntityManagerFactory("BankAppPU");
         this.mediator = new Mediator(this.emf);
         
-        //Scene scene = new Scene(ControllerBase.loadFxml("TransactionsWindow.fxml", mediator));
-        content.getChildren().setAll(loadFxml("TransactionsWindow.fxml").getParent());// appeler le TransactionsWindow du compte correspondant au bouton
-        //Stage stage = new Stage();
-        //stage.setScene(scene);
-        //stage.show();
+        TransactionsWindowController controller = (TransactionsWindowController)ControllerBase.loadFxml(
+                "TransactionsWindow.fxml",
+                this.mediator
+        );
+        controller.setFlagAccountType("Current");
+        controller.initTransactionsWindowController(this.mediator);
+        content.getChildren().setAll(controller.getParent());
+        
+        ContactWindowController controller2 = (ContactWindowController)ControllerBase.loadFxml(
+                "ContactWindow.fxml",
+                this.mediator
+        );
+        controller2.setFlagAccountType("Current");
+        controller2.initContactWindowController(this.mediator);
+        contact.getChildren().setAll(controller2.getParent());
     }
     
+    
+    
+      
     @FXML
     private void handleButtonAccountSaving(ActionEvent event) throws IOException {
         this.emf = Persistence.createEntityManagerFactory("BankAppPU");
         this.mediator = new Mediator(this.emf);
         
-        ControllerBase controller = ControllerBase.loadFxml("TransactionsWindow.fxml", mediator);
-        Scene scene = new Scene(controller.getParent());
-        // appeler le TransactionsWindow du compte correspondant au bouton
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        TransactionsWindowController controller = (TransactionsWindowController)ControllerBase.loadFxml(
+                "TransactionsWindow.fxml",
+                this.mediator
+        );
+        controller.setFlagAccountType("Savings");
+        controller.initTransactionsWindowController(this.mediator);
+        content.getChildren().setAll(controller.getParent());
+
+        ContactWindowController controller2 = (ContactWindowController)ControllerBase.loadFxml(
+                "ContactWindow.fxml",
+                this.mediator
+        );
+        controller2.setFlagAccountType("Savings");
+        controller2.initContactWindowController(this.mediator);
+        contact.getChildren().setAll(controller2.getParent());
+
     }
     
+   
     private Mediator mediator = null;
     private EntityManagerFactory emf = null;
 }

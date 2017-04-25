@@ -5,6 +5,7 @@
  */
 package utils;
 
+
 import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,20 +26,12 @@ public class CheckTest {
 
     @Test
     public void testCheckIsNull_String_String() {
-        System.out.println("checkIsNull");
-        String field = "";
-        String name = "";
-        Check.checkIsNull(field, name);
-        fail("The test case is a prototype.");
+        //Check.checkIsNull(null,"foobar");
     }
 
     @Test
     public void testCheckIsEmpty() {
-        System.out.println("checkIsEmpty");
-        String field = "";
-        String name = "";
-        Check.checkIsEmpty(field, name);
-        fail("The test case is a prototype.");
+        Check.checkIsEmpty("", "name");
     }
 
     @Test
@@ -52,19 +45,12 @@ public class CheckTest {
 
     @Test
     public void testCheckLetters() {
-        System.out.println("checkLetters");
-        String field = "";
-        String nameField = "";
-        Check.checkLetters(field, nameField);
-        fail("The test case is a prototype.");
+        Check.checkLetters("Abc123", "name");
     }
 
     @Test
     public void testCheckPhoneNumber() {
-        System.out.println("checkPhoneNumber");
-        String phone = "";
-        Check.checkPhoneNumber(phone);
-        fail("The test case is a prototype.");
+        Check.checkPhoneNumber("061234AB12");
     }
 
     @Test
