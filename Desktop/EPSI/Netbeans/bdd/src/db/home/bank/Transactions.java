@@ -6,6 +6,8 @@
 package db.home.bank;
 
 import java.io.Serializable; 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
@@ -203,7 +205,12 @@ public class Transactions implements Serializable {
 
     @Override
     public String toString() {
-        return "db.home.bank.Transactions[ id=" + id + " ]";
+        return this.label;//"db.home.bank.Transactions[ id=" + id + " ]";
+    }
+    
+    public String getFormatDate() {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        return df.format(this.date);
     }
     
 }
