@@ -158,7 +158,7 @@ public class Holder implements Serializable {
 
     @Override
     public String toString() {
-        return "db.home.bank.Holder[ id=" + id + " ]";
+        return this.name + this.firstname;//"db.home.bank.Holder[ id=" + id + " ]";
     }
     
 }

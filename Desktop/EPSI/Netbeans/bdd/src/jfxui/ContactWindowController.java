@@ -48,26 +48,23 @@ public class ContactWindowController extends ControllerBase {
             TypedQuery<AccountManager> qManagerPhone = em.createQuery("SELECT am.phone FROM AccountManager am JOIN am.idAgency ag JOIN ag.accountCollection a WHERE a.id =:acc", AccountManager.class);
             TypedQuery<AccountManager> qManagerEmail = em.createQuery("SELECT am.email FROM AccountManager am JOIN am.idAgency ag JOIN ag.accountCollection a WHERE a.id =:acc", AccountManager.class);
 
+            int idAccount = 0;
             if (flagAccountType.equals("Current")) {
-                qBank.setParameter("acc", 1);
-                qAgency.setParameter("acc", 1);
-                qAddress.setParameter("acc", 1);
-                qPostcode.setParameter("acc", 1);
-                qManagerName.setParameter("acc", 1);
-                qManagerFirstname.setParameter("acc", 1);       
-                qManagerPhone.setParameter("acc", 1);
-                qManagerEmail.setParameter("acc", 1);
+                idAccount = 1;
             }
             else {
-                qBank.setParameter("acc", 2);
-                qAgency.setParameter("acc", 2);
-                qAddress.setParameter("acc", 2);
-                qPostcode.setParameter("acc", 2);
-                qManagerName.setParameter("acc", 2);
-                qManagerFirstname.setParameter("acc", 2);       
-                qManagerPhone.setParameter("acc", 2);
-                qManagerEmail.setParameter("acc", 2);
+                idAccount = 2;
             }
+            
+            qBank.setParameter("acc", idAccount);
+            qAgency.setParameter("acc", idAccount);
+            qAddress.setParameter("acc", idAccount);
+            qPostcode.setParameter("acc", idAccount);
+            qManagerName.setParameter("acc", idAccount);
+            qManagerFirstname.setParameter("acc", idAccount);
+            qManagerPhone.setParameter("acc", idAccount);
+            qManagerEmail.setParameter("acc", idAccount);
+
 
             this.labelBank.setText(("Bank : " + qBank.getResultList()).replace("[", "").replace("]", ""));
             this.labelAgency.setText(("Agency : " + qAgency.getResultList()).replace("[", "").replace("]", ""));  

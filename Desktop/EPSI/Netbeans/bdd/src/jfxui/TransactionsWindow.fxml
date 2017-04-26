@@ -19,7 +19,7 @@
            </columnResizePolicy>
            <columns>
           <TableColumn text="Date">
-              <cellValueFactory><PropertyValueFactory property="Date" /></cellValueFactory>
+              <cellValueFactory><PropertyValueFactory property="FormatDate" /></cellValueFactory>
           </TableColumn>
           <TableColumn text="Label">
               <cellValueFactory><PropertyValueFactory property="Label" /></cellValueFactory>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TitledPane animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="435.0" prefWidth="600.0" text="BankApp - vizualisation by categories" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxui.BudgetCategoriesWindowController">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+         <children>
+            <Label layoutX="59.0" layoutY="14.0" text="Transportation" AnchorPane.leftAnchor="60.0" />
+            <Label layoutX="60.0" layoutY="39.0" text="Everyday life" AnchorPane.leftAnchor="60.0" />
+            <Label layoutX="71.0" layoutY="67.0" text="Supermarket" AnchorPane.leftAnchor="80.0" />
+            <Label layoutX="73.0" layoutY="93.0" text="Withdrawal" AnchorPane.leftAnchor="80.0" />
+            <Label layoutX="73.0" layoutY="118.0" text="Dressing" AnchorPane.leftAnchor="80.0" />
+            <Label layoutX="98.0" layoutY="143.0" text="Heatlh" AnchorPane.leftAnchor="80.0" />
+            <Label layoutX="67.0" layoutY="169.0" text="Accomodation" AnchorPane.leftAnchor="60.0" />
+            <Label layoutX="76.0" layoutY="195.0" text="Rent" AnchorPane.leftAnchor="80.0" />
+            <Label layoutX="77.0" layoutY="219.0" text="Electricity / water / gas" AnchorPane.leftAnchor="80.0" />
+            <Label layoutX="90.0" layoutY="244.0" text="Furniture" AnchorPane.leftAnchor="80.0" />
+            <Label layoutX="68.0" layoutY="268.0" text="Maintenance" AnchorPane.leftAnchor="80.0" />
+            <Label layoutX="74.0" layoutY="294.0" text="Hobbies" AnchorPane.leftAnchor="60.0" />
+            <Label layoutX="72.0" layoutY="323.0" text="Professional" AnchorPane.leftAnchor="60.0" />
+            <Label layoutX="69.0" layoutY="350.0" text="Saving" AnchorPane.leftAnchor="60.0" />
+            <Label layoutX="75.0" layoutY="372.0" text="Others" AnchorPane.leftAnchor="60.0" />
+            <Label fx:id="labelTransportation" layoutX="265.0" layoutY="14.0" AnchorPane.leftAnchor="250.0" />
+            <Label fx:id="labelEverydayLife" layoutX="261.0" layoutY="39.0" />
+            <Label fx:id="labelSupermarket" layoutX="261.0" layoutY="67.0" />
+            <Label fx:id="labelWithdrawal" layoutX="261.0" layoutY="93.0" />
+            <Label fx:id="labelDressing" layoutX="261.0" layoutY="118.0" />
+            <Label fx:id="labelHealth" layoutX="261.0" layoutY="143.0" />
+            <Label fx:id="labelAccomodation" layoutX="261.0" layoutY="169.0" />
+            <Label fx:id="labelRent" layoutX="261.0" layoutY="195.0" />
+            <Label fx:id="labelElectricityWaterGas" layoutX="261.0" layoutY="219.0" />
+            <Label fx:id="labelFurniture" layoutX="261.0" layoutY="244.0" />
+            <Label fx:id="labelMaintenance" layoutX="261.0" layoutY="268.0" />
+            <Label fx:id="labelHobbies" layoutX="261.0" layoutY="294.0" />
+            <Label fx:id="labelProfessional" layoutX="261.0" layoutY="323.0" />
+            <Label fx:id="labelSaving" layoutX="261.0" layoutY="350.0" />
+            <Label fx:id="labelOther" layoutX="261.0" layoutY="372.0" />
+            <Button fx:id="btnOK" layoutX="547.0" layoutY="367.0" mnemonicParsing="false" onAction="#handleButtonOK" text="OK" />
+            <Label layoutX="477.0" layoutY="14.0" text="Total" />
+            <Label fx:id="labelAmount" layoutX="476.0" layoutY="39.0" />
+         </children></AnchorPane>
+  </content>
+</TitledPane>

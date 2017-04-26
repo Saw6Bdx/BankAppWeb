@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TitledPane alignment="CENTER" animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="331.0" prefWidth="400.0" text="Modify Account Manager informations" textAlignment="CENTER" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="jfxui.ModifyUserWindowController">
+<content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="465.0" prefWidth="398.0">
+         <children>
+            <Label alignment="CENTER_RIGHT" layoutX="85.0" layoutY="65.0" text="Name" AnchorPane.rightAnchor="265.0" />
+            <TextField fx:id="txtHolderrName" layoutX="138.0" layoutY="60.0" prefHeight="25.0" prefWidth="210.0" promptText="New user name" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="45.0" />
+            <ChoiceBox fx:id="setHolderName" layoutX="148.0" layoutY="20.0" prefHeight="27.0" prefWidth="192.0" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="45.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="60.0" layoutY="105.0" text="First name" AnchorPane.rightAnchor="265.0" />
+            <TextField fx:id="txtHolderFirstName" layoutX="150.0" layoutY="100.0" prefHeight="27.0" prefWidth="207.0" promptText="New user first name" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="45.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="84.0" layoutY="144.0" text="Phone" AnchorPane.rightAnchor="265.0" />
+            <TextField fx:id="txtHolderPhone" layoutX="150.0" layoutY="139.0" prefHeight="25.0" prefWidth="210.0" promptText="Phone (optional)" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="45.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="85.0" layoutY="184.0" text="E-mail" AnchorPane.rightAnchor="265.0" />
+            <TextField fx:id="txtHolderEmail" layoutX="150.0" layoutY="179.0" prefHeight="25.0" prefWidth="210.0" promptText="E-mail (optional)" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="45.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="18.0" layoutY="224.0" text="Birthday date" AnchorPane.rightAnchor="265.0" />
+            <DatePicker fx:id="txtHolderBirthday" layoutX="150.0" layoutY="219.0" promptText="Choose ..." AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="45.0" />
+            <Button fx:id="btnCancel" layoutX="177.0" layoutY="268.0" mnemonicParsing="false" onAction="#handleBtnCancel" prefHeight="27.0" prefWidth="106.0" text="Cancel" AnchorPane.leftAnchor="177.0" AnchorPane.rightAnchor="135.79999999999995" />
+            <Button fx:id="btnOK" layoutX="261.4" layoutY="268.0" mnemonicParsing="false" onAction="#handleBtnOK" prefHeight="27.0" prefWidth="92.0" text="Modify" AnchorPane.leftAnchor="251.0" AnchorPane.rightAnchor="55.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="87.0" layoutY="25.0" text="Person to modify" AnchorPane.rightAnchor="265.0" />
+         </children></AnchorPane>
+  </content> 
+</TitledPane>

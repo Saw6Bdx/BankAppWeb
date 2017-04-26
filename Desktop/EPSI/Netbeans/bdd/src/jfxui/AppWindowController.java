@@ -55,6 +55,34 @@ public class AppWindowController extends ControllerBase{
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }
     
+    @FXML
+    private void handleMenuModifyUserProfile(ActionEvent event) throws IOException {
+        this.emf = Persistence.createEntityManagerFactory("BankAppPU");
+        this.mediator = new Mediator(this.emf);
+        
+        ControllerBase controller = ControllerBase.loadFxml("ModifyUserWindow.fxml", mediator);
+        Scene scene = new Scene(controller.getParent());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+        //Hide current window, ne fonctionne pas, à voir plus tard
+        ((Node)(event.getSource())).getScene().getWindow().hide();
+    }
+    
+    @FXML
+    private void handleMenuChangePassword(ActionEvent event) throws IOException {
+        this.emf = Persistence.createEntityManagerFactory("BankAppPU");
+        this.mediator = new Mediator(this.emf);
+        
+        ControllerBase controller = ControllerBase.loadFxml("ChangePasswordWindow.fxml", mediator);
+        Scene scene = new Scene(controller.getParent());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+        //Hide current window, ne fonctionne pas, à voir plus tard
+        ((Node)(event.getSource())).getScene().getWindow().hide();
+    }
+    
     
     @FXML
     private void handleMenuEditNewAccount(ActionEvent event) throws IOException {
@@ -70,6 +98,42 @@ public class AppWindowController extends ControllerBase{
 
         // New "account" button in the AppWindow
         // TO BE IMPLEMENTED ...
+    }
+    
+    @FXML
+    private void handleMenuModifyAccountManager(ActionEvent event) throws IOException {
+        this.emf = Persistence.createEntityManagerFactory("BankAppPU");
+        this.mediator = new Mediator(this.emf);
+        
+        ControllerBase controller = ControllerBase.loadFxml("ModifyAccountManagerWindow.fxml", this.mediator);
+        Scene scene = new Scene(controller.getParent());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    @FXML
+    private void handleMenuDeleteAccountManager(ActionEvent event) throws IOException {
+        this.emf = Persistence.createEntityManagerFactory("BankAppPU");
+        this.mediator = new Mediator(this.emf);
+        
+        ControllerBase controller = ControllerBase.loadFxml("DeleteAccountManagerWindow.fxml", this.mediator);
+        Scene scene = new Scene(controller.getParent());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    @FXML
+    private void handleMenuBudgetCategories(ActionEvent event) throws IOException {
+        this.emf = Persistence.createEntityManagerFactory("BankAppPU");
+        this.mediator = new Mediator(this.emf);
+        
+        ControllerBase controller = ControllerBase.loadFxml("BudgetCategoriesWindow.fxml", this.mediator);
+        Scene scene = new Scene(controller.getParent());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
     
     @FXML
@@ -93,8 +157,6 @@ public class AppWindowController extends ControllerBase{
         controller2.initContactWindowController(this.mediator);
         contact.getChildren().setAll(controller2.getParent());
     }
-    
-    
     
       
     @FXML
@@ -120,6 +182,29 @@ public class AppWindowController extends ControllerBase{
 
     }
     
+    @FXML
+    private void handleContact(ActionEvent event) throws IOException {
+        this.emf = Persistence.createEntityManagerFactory("BankAppPU");
+        this.mediator = new Mediator(this.emf);
+        
+        ControllerBase controller = ControllerBase.loadFxml("HelpContactWindow.fxml", this.mediator);
+        Scene scene = new Scene(controller.getParent());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    @FXML
+    private void handleAbout(ActionEvent event) throws IOException {
+        this.emf = Persistence.createEntityManagerFactory("BankAppPU");
+        this.mediator = new Mediator(this.emf);
+        
+        ControllerBase controller = ControllerBase.loadFxml("AboutWindow.fxml", this.mediator);
+        Scene scene = new Scene(controller.getParent());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
    
     private Mediator mediator = null;
     private EntityManagerFactory emf = null;

@@ -146,7 +146,7 @@ public class AccountManager implements Serializable {
 
     @Override
     public String toString() {
-        return "db.home.bank.AccountManager[ id=" + id + " ]";
+        return this.name + " " + this.firstName;
     }
     
 }

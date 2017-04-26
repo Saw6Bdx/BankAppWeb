@@ -7,16 +7,10 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<TitledPane animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" 
-            text="BankApp" 
-            xmlns="http://javafx.com/javafx/8.0.111" 
-            xmlns:fx="http://javafx.com/fxml/1" 
-            fx:controller="jfxui.AppWindowController">
+<TitledPane animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" text="BankApp" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxui.AppWindowController">
   <content>
     <AnchorPane>
          <children>
@@ -26,7 +20,8 @@
                   <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleMenuFileNewUser" text="New user..." />
                         <MenuItem mnemonicParsing="false" onAction="#handleMenuFileChangeUser" text="Change user..." />
-                        <MenuItem mnemonicParsing="false" text="Modify user profile..." />
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuModifyUserProfile" text="Modify user profile..." />
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuChangePassword" text="Change password..." />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Export my data..." />
                         <SeparatorMenuItem mnemonicParsing="false" />
@@ -40,7 +35,8 @@
                         <MenuItem mnemonicParsing="false" onAction="#handleMenuEditNewAccount" text="New account..." />
                         <MenuItem mnemonicParsing="false" text="Delete account" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Modify account manager..." />
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuModifyAccountManager" text="Modify account manager..." />
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuDeleteAccountManager" text="Delete account manager..." />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Cancel" />
                   </items>
@@ -55,7 +51,7 @@
                 </Menu>
                   <Menu mnemonicParsing="false" text="My budget">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="My categories..." />
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuBudgetCategories" text="My categories..." />
                         <MenuItem mnemonicParsing="false" text="New category..." />
                         <MenuItem mnemonicParsing="false" text="Delete category" />
                         <SeparatorMenuItem mnemonicParsing="false" />
@@ -69,8 +65,8 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="Help">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Contact" />
-                        <MenuItem mnemonicParsing="false" text="About" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleContact" text="Contact" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="About" />
                      </items>
                   </Menu>
               </menus>
@@ -91,7 +87,7 @@
                         <SplitPane dividerPositions="0.18128654970760233" orientation="VERTICAL" prefHeight="344.0" prefWidth="450.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <items>
                               <AnchorPane fx:id="contact" minHeight="0.0" minWidth="0.0" prefHeight="65.0" prefWidth="444.0" />
-                              <AnchorPane fx:id="content" minHeight="0.0" minWidth="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                              <AnchorPane fx:id="content" minHeight="0.0" minWidth="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                           </items>
                         </SplitPane>
                      </children></AnchorPane>
