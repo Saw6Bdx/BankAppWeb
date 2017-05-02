@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TitledPane alignment="CENTER" animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="336.0" prefWidth="600" text="BankApp - New Transaction" textAlignment="CENTER" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxui.NewTransactionsWindowController">
+<content>
+<AnchorPane prefHeight="336.0" prefWidth="600.0">
+   <children>
+      <DatePicker fx:id="dateCreated" layoutX="82.0" layoutY="14.0" promptText="Date" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="5.0" />
+      <Label layoutX="39.0" layoutY="88.0" text="Label" AnchorPane.leftAnchor="45.0" AnchorPane.topAnchor="98.0" />
+      <TextField fx:id="txtTransactionsLabel" layoutX="72.0" layoutY="84.0" prefHeight="25.0" prefWidth="401.0" promptText="Label" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="95.0" />
+      <Label layoutX="18.0" layoutY="150.0" text="Category" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="153.0" />
+      <ChoiceBox fx:id="choiceCategory" layoutX="72.0" layoutY="146.0" prefHeight="25.0" prefWidth="401.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="150.0" />
+      <Label layoutX="21.0" layoutY="211.0" text="Account" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="211.0" />
+      <ChoiceBox fx:id="choiceAccount" layoutX="72.0" layoutY="207.0" prefHeight="25.0" prefWidth="401.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="207.0" />
+      <Button fx:id="btnApply" layoutX="521.0" layoutY="258.0" mnemonicParsing="false" onAction="#handleBtnApply" text="Confirm" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="258.0" />
+      <Button fx:id="btnCancel" layoutX="459.0" layoutY="258.0" mnemonicParsing="false" onAction="#handleBtnCancel" text="Cancel" AnchorPane.rightAnchor="89.0" AnchorPane.topAnchor="258.0" />
+      <TextField fx:id="txtTransactionsAmount" layoutX="412.0" layoutY="14.0" prefHeight="25.0" prefWidth="157.0" promptText="Amount" AnchorPane.rightAnchor="19.0" />
+      <Label layoutX="358.0" layoutY="18.0" text="Amount" AnchorPane.rightAnchor="185.0" AnchorPane.topAnchor="8.0" />
+      <DatePicker fx:id="dateEnd" layoutX="92.0" layoutY="55.0" promptText="End Date" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="45.0" />
+      <ChoiceBox fx:id="choiceTransactionsType" layoutX="409.0" layoutY="55.0" prefHeight="25.0" prefWidth="159.0" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="45.0" />
+      <Label layoutX="375.0" layoutY="59.0" text="Type" AnchorPane.rightAnchor="185.0" AnchorPane.topAnchor="48.0" />
+      <Label layoutX="32.0" layoutY="18.0" text="Start Date" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="8.0" />
+      <Label layoutX="38.0" layoutY="59.0" text="End Date" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="48.0" />
+   </children>
+</AnchorPane>
+</content>
+</TitledPane>

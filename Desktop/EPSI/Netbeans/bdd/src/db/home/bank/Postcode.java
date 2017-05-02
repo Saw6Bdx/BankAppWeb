@@ -6,18 +6,23 @@
 package db.home.bank;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import utils.Check;
 
 /**
  *
- * @author Guest
+ * @author Charlotte
  */
 @Entity
 @XmlRootElement
@@ -27,7 +32,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Postcode.findByPostcode", query = "SELECT p FROM Postcode p WHERE p.postcode = :postcode")
     , @NamedQuery(name = "Postcode.findByCity", query = "SELECT p FROM Postcode p WHERE p.city = :city")})
 public class Postcode implements Serializable {
-
+    /*  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	postcode INT NOT NULL, /!\ changer en VARCHAR(5) ??? si oui ajouter les exceptions dans le constructeur
+	city VARCHAR(250) NOT NULL*/
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +45,8 @@ public class Postcode implements Serializable {
     private int postcode;
     @Basic(optional = false)
     private String city;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPostcode")
+    private Collection<Address> addressCollection;
 
     public Postcode() {
     }
@@ -46,13 +56,17 @@ public class Postcode implements Serializable {
     }
 
     public Postcode(Integer id, int postcode, String city) {
+        Check.checkIsEmpty(city, "city");
+        if (!city.matches("[a-zA-Z]+")){
+            throw new IllegalArgumentException("unit must contain only letters, ex monthly.");
+        }
         this.id = id;
         this.postcode = postcode;
         this.city = city;
     }
 
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Integer id) {
@@ -60,7 +74,7 @@ public class Postcode implements Serializable {
     }
 
     public int getPostcode() {
-        return postcode;
+        return this.postcode;
     }
 
     public void setPostcode(int postcode) {
@@ -68,11 +82,24 @@ public class Postcode implements Serializable {
     }
 
     public String getCity() {
-        return city;
+        return this.city;
     }
 
     public void setCity(String city) {
+        Check.checkIsEmpty(city, "city");
+        if (!city.matches("[a-zA-Z]+")){
+            throw new IllegalArgumentException("unit must contain only letters, ex monthly.");
+        }
         this.city = city;
+    }
+
+    @XmlTransient
+    public Collection<Address> getAddressCollection() {
+        return this.addressCollection;
+    }
+
+    public void setAddressCollection(Collection<Address> addressCollection) {
+        this.addressCollection = addressCollection;
     }
 
     @Override

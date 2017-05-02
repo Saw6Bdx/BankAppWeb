@@ -6,7 +6,7 @@
 package db.home.bank;
 
 import java.io.Serializable;
-import java.util.Collection; 
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,10 +17,11 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import utils.Check;
 
 /**
  *
- * @author Guest
+ * @author Charlotte
  */
 @Entity
 @XmlRootElement
@@ -30,7 +31,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Recipient.findByName", query = "SELECT r FROM Recipient r WHERE r.name = :name")
     , @NamedQuery(name = "Recipient.findByIban", query = "SELECT r FROM Recipient r WHERE r.iban = :iban")})
 public class Recipient implements Serializable {
-
+    /*  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(250) NOT NULL,
+	IBAN VARCHAR(250)*/
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,12 +54,13 @@ public class Recipient implements Serializable {
     }
 
     public Recipient(Integer id, String name) {
+        Check.checkIsEmpty(name, "name");
         this.id = id;
         this.name = name;
     }
 
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Integer id) {
@@ -63,24 +68,29 @@ public class Recipient implements Serializable {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
+        Check.checkIsEmpty(name, "name");
         this.name = name;
     }
 
     public String getIban() {
-        return iban;
+        return this.iban;
     }
 
     public void setIban(String iban) {
+        Check.checkIsNull(iban, "iban");
+        if(!iban.matches("^[A-Z]+[A-Z].*")) {
+            throw new IllegalArgumentException("iban must start with two upper letters (contrycode).");
+        }
         this.iban = iban;
     }
 
     @XmlTransient
     public Collection<Transactions> getTransactionsCollection() {
-        return transactionsCollection;
+        return this.transactionsCollection;
     }
 
     public void setTransactionsCollection(Collection<Transactions> transactionsCollection) {
@@ -109,7 +119,7 @@ public class Recipient implements Serializable {
 
     @Override
     public String toString() {
-        return "db.home.bank.Recipient[ id=" + id + " ]";
+        return this.name;
     }
     
 }

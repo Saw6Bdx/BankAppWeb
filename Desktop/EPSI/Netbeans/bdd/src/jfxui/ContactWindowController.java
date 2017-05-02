@@ -65,7 +65,6 @@ public class ContactWindowController extends ControllerBase {
             qManagerPhone.setParameter("acc", idAccount);
             qManagerEmail.setParameter("acc", idAccount);
 
-
             this.labelBank.setText(("Bank : " + qBank.getResultList()).replace("[", "").replace("]", ""));
             this.labelAgency.setText(("Agency : " + qAgency.getResultList()).replace("[", "").replace("]", ""));  
             this.labelAddress.setText(
@@ -84,6 +83,8 @@ public class ContactWindowController extends ControllerBase {
             this.labelEmail.setText(
                     ("Email : " 
                     + qManagerEmail.getResultList()).replace("[", "").replace("]", ""));
+            
+            em.close();
         }
         catch(PersistenceException e){
             AlertMessage.processPersistenceException(e);

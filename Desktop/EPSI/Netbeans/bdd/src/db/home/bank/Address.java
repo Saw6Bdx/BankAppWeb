@@ -20,10 +20,11 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import utils.Check;
 
 /**
  *
- * @author Guest
+ * @author Mary
  */
 @Entity
 @XmlRootElement
@@ -34,6 +35,11 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Address.findByLine2", query = "SELECT a FROM Address a WHERE a.line2 = :line2")})
 public class Address implements Serializable {
 
+    /*  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	line1 VARCHAR(250) NOT NULL,
+	line2 VARCHAR(250),
+	idPostcode INT NOT NULL,*/
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,12 +64,13 @@ public class Address implements Serializable {
     }
 
     public Address(Integer id, String line1) {
+        Check.checkIsEmpty(line1,"line1");
         this.id = id;
         this.line1 = line1;
     }
 
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Integer id) {
@@ -71,23 +78,25 @@ public class Address implements Serializable {
     }
 
     public String getLine1() {
-        return line1;
+        return this.line1;
     }
 
     public void setLine1(String line1) {
+        Check.checkIsEmpty(line1,"line1");
         this.line1 = line1;
     }
 
     public String getLine2() {
-        return line2;
+        return this.line2;
     }
 
     public void setLine2(String line2) {
+        Check.checkIsNull(line2,"line2"); // line2 can be empty
         this.line2 = line2;
     }
 
     public Postcode getIdPostcode() {
-        return idPostcode;
+        return this.idPostcode;
     }
 
     public void setIdPostcode(Postcode idPostcode) {
@@ -96,7 +105,7 @@ public class Address implements Serializable {
 
     @XmlTransient
     public Collection<Agency> getAgencyCollection() {
-        return agencyCollection;
+        return this.agencyCollection;
     }
 
     public void setAgencyCollection(Collection<Agency> agencyCollection) {
@@ -105,7 +114,7 @@ public class Address implements Serializable {
 
     @XmlTransient
     public Collection<Holder> getHolderCollection() {
-        return holderCollection;
+        return this.holderCollection;
     }
 
     public void setHolderCollection(Collection<Holder> holderCollection) {
@@ -134,7 +143,12 @@ public class Address implements Serializable {
 
     @Override
     public String toString() {
-        return (this.line1 + "\n                 " + this.line2);
+        if(this.line2==null) {
+            return this.line1;
+        }
+        else {
+            return this.line1 + "\n                 " + this.line2;
+        }
     }
     
 }

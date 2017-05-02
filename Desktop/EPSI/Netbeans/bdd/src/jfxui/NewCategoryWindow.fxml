@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TitledPane alignment="CENTER" animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="249.0" prefWidth="400.0" text="BankApp - New Category" textAlignment="CENTER" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxui.NewCategoryWindowController">
+<content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="581.0" prefWidth="398.0">
+         <children>
+            <Label alignment="CENTER_RIGHT" layoutX="89.0" layoutY="25.0" text="New category" AnchorPane.rightAnchor="265.0" />
+            <TextField fx:id="txtCategory" layoutX="136.0" layoutY="21.0" prefHeight="25.0" prefWidth="210.0" promptText="New category" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="40.0" />
+            <CheckBox fx:id="checkValue" layoutX="37.0" layoutY="67.0" mnemonicParsing="false" onAction="#handleCheckBox" text="Sub-category ?" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="60.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="99.0" layoutY="35.0" text="Sub-category" AnchorPane.rightAnchor="265.0" AnchorPane.topAnchor="105.0" />
+            <ChoiceBox fx:id="setCategoriesName" layoutX="135.0" layoutY="117.0" prefWidth="150.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="100.0" />
+            <Button fx:id="btnCancel" layoutX="200.0" layoutY="551.0" mnemonicParsing="false" onAction="#handleBtnCancel" prefHeight="27.0" prefWidth="64.0" text="Cancel" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="160.0" />
+            <Button fx:id="btnCreate" layoutX="272.0" layoutY="551.0" mnemonicParsing="false" onAction="#handleBtnCreate" prefHeight="27.0" prefWidth="74.0" text="Create" AnchorPane.leftAnchor="270.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="160.0" />
+         </children></AnchorPane>
+  </content> 
+</TitledPane>

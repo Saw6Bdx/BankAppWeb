@@ -21,9 +21,9 @@ import javax.persistence.Persistence;
 
 import db.home.bank.Holder;
 import db.home.bank.Postcode;
-import projetJava.Login;
 import utils.Valid;
 import utils.AlertMessage;
+import static utils.Password.get_SHA_512_SecurePassword;
 
 /**
  *  
@@ -48,14 +48,7 @@ public class NewUserWindowController extends ControllerBase {
     
     @Override
     public void initialize(Mediator mediator) {
-        //
-	//List<Task> tasks = em.createQuery("SELECT t, u FROM Task t, User u WHERE u.id=t.utilisateur.id").getResultList();
-		
-	// Remplissage du tableview avec tasks
-	//this.listTasks.setItems(FXCollections.observableList(tasks));
-                
-        //  List<Task> tasks2 = em.createQuery("SELECT u FROM User u").getResultList();//em.createQuery("SELECT u FROM User u, Task t WHERE t.id_utilisateurs = u.id").getResultList();
-        //  this.listTasks.setItems(FXCollections.observableList(tasks2));
+        
     }
     
     @FXML
@@ -104,10 +97,9 @@ public class NewUserWindowController extends ControllerBase {
                                         // All the fields are correct, then it is possible to create objects
                                         Postcode postcode = new Postcode(null,Integer.parseInt(postCode),city);
                                         Address address = new Address(null,addLine1);
-                                        Holder holder = new Holder(null,name,firstName,login,pwd);
+                                        //Holder holder = new Holder(null,name,firstName,login,pwd);
+                                        Holder holder = new Holder(null,name,firstName,login,get_SHA_512_SecurePassword(pwd,"1"));
     
-                                        Login l = new Login(login,pwd);
-
                                         // Writing info into the database
                                         EntityManagerFactory emf = Persistence.createEntityManagerFactory("BankAppPU");
                                         EntityManager em = emf.createEntityManager();
@@ -199,6 +191,13 @@ public class NewUserWindowController extends ControllerBase {
         Stage current = (Stage)btnCancel.getScene().getWindow();
         current.close();
         
+        // Going back to the previous stage        
+        ControllerBase controller = ControllerBase.loadFxml("LoginWindow.fxml", getMediator());
+        Scene scene = new Scene(controller.getParent());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+        
     }
-    
+        
 }

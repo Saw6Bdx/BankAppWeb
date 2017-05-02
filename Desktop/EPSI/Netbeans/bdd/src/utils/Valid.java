@@ -73,7 +73,7 @@ public class Valid {
         if ( str.matches("[0-9]+") ) { 
             return true;
         }
-        return false; 
+        return false;
     }
     
     /**
@@ -87,10 +87,6 @@ public class Valid {
         }
         return false;
     }
-    
-    /*private Date today() {
-        return Calendar.getInstance().getTime();
-    }*/
     
     /**
      * Method which checks if the date is not empty

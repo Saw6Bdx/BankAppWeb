@@ -10,7 +10,7 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue; 
+import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
@@ -21,18 +21,21 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Guest
+ * @author Charlotte
  */
 @Entity
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Bank.findAll", query = "SELECT b FROM Bank b")
-    , @NamedQuery(name = "Bank.findName", query = "SELECT b.name FROM Bank b")
     , @NamedQuery(name = "Bank.findById", query = "SELECT b FROM Bank b WHERE b.id = :id")
     , @NamedQuery(name = "Bank.findByName", query = "SELECT b FROM Bank b WHERE b.name = :name")
     , @NamedQuery(name = "Bank.findByBankCode", query = "SELECT b FROM Bank b WHERE b.bankCode = :bankCode")})
 public class Bank implements Serializable {
 
+    /*  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(250) NOT NULL,
+	bankCode VARCHAR(250) NOT NULL*/
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,7 +62,7 @@ public class Bank implements Serializable {
     }
 
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Integer id) {
@@ -67,7 +70,7 @@ public class Bank implements Serializable {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -75,7 +78,7 @@ public class Bank implements Serializable {
     }
 
     public String getBankCode() {
-        return bankCode;
+        return this.bankCode;
     }
 
     public void setBankCode(String bankCode) {
@@ -84,7 +87,7 @@ public class Bank implements Serializable {
 
     @XmlTransient
     public Collection<Agency> getAgencyCollection() {
-        return agencyCollection;
+        return this.agencyCollection;
     }
 
     public void setAgencyCollection(Collection<Agency> agencyCollection) {

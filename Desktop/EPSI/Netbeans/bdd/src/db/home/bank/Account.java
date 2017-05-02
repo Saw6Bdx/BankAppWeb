@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package db.home.bank; 
+package db.home.bank;
+import utils.*;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -28,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Guest
+ * @author Mary
  */
 @Entity
 @XmlRootElement
@@ -42,7 +43,18 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Account.findByDescription", query = "SELECT a FROM Account a WHERE a.description = :description")
     , @NamedQuery(name = "Account.findByInterestRate", query = "SELECT a FROM Account a WHERE a.interestRate = :interestRate")})
 public class Account implements Serializable {
-
+    
+    /*id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	number VARCHAR(250) NOT NULL,
+	creationDate DATE NOT NULL,
+	firstBalance DOUBLE(12,2) NOT NULL,
+	overdraft DOUBLE(6,2) NOT NULL,
+	description VARCHAR(250),
+	interestRate DOUBLE(4,2),
+	idAgency INT NOT NULL,
+	idAccountType INT NOT NULL,
+	idCountryCode INT NOT NULL,*/
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -85,6 +97,16 @@ public class Account implements Serializable {
     }
 
     public Account(Integer id, String number, Date creationDate, double firstBalance, double overdraft) {
+        if(number.isEmpty()){
+            throw new IllegalArgumentException("number can't be empty");
+        }
+        if(creationDate == null){
+            throw new NullPointerException("creationDate can't be null");
+        }
+        if(creationDate.getTime() > DateUtils.today().getTime()){
+            throw new IllegalArgumentException("creationDate in the future");
+	}
+        
         this.id = id;
         this.number = number;
         this.creationDate = creationDate;
@@ -93,7 +115,7 @@ public class Account implements Serializable {
     }
 
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Integer id) {
@@ -101,47 +123,61 @@ public class Account implements Serializable {
     }
 
     public String getNumber() {
-        return number;
+        return this.number;
     }
 
     public void setNumber(String number) {
+        if(number.isEmpty()){
+            throw new IllegalArgumentException("number can't be empty");
+        }
         this.number = number;
     }
 
     public Date getCreationDate() {
-        return creationDate;
+        return this.creationDate;
     }
 
     public void setCreationDate(Date creationDate) {
+        if(creationDate == null){
+            throw new NullPointerException("creationDate can't be null");
+        }
+        if(creationDate.getTime() > DateUtils.today().getTime()){
+            throw new IllegalArgumentException("creationDate in the future");
+	}
         this.creationDate = creationDate;
     }
 
     public double getFirstBalance() {
-        return firstBalance;
+        return this.firstBalance;
     }
 
     public void setFirstBalance(double firstBalance) {
+        // exception levée lors de la saisie NewAccountWindow
         this.firstBalance = firstBalance;
     }
 
     public double getOverdraft() {
-        return overdraft;
+        return this.overdraft;
     }
 
     public void setOverdraft(double overdraft) {
+        // exception levée lors de la saisie NewAccountWindow
         this.overdraft = overdraft;
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public void setDescription(String description) {
+        if(description == null){
+            throw new NullPointerException("description can't be null");
+        }
         this.description = description;
     }
 
     public Double getInterestRate() {
-        return interestRate;
+        return this.interestRate;
     }
 
     public void setInterestRate(Double interestRate) {
@@ -150,7 +186,7 @@ public class Account implements Serializable {
 
     @XmlTransient
     public Collection<Holder> getHolderCollection() {
-        return holderCollection;
+        return this.holderCollection;
     }
 
     public void setHolderCollection(Collection<Holder> holderCollection) {
@@ -159,7 +195,7 @@ public class Account implements Serializable {
 
     @XmlTransient
     public Collection<Transactions> getTransactionsCollection() {
-        return transactionsCollection;
+        return this.transactionsCollection;
     }
 
     public void setTransactionsCollection(Collection<Transactions> transactionsCollection) {
@@ -167,7 +203,7 @@ public class Account implements Serializable {
     }
 
     public AccountType getIdAccountType() {
-        return idAccountType;
+        return this.idAccountType;
     }
 
     public void setIdAccountType(AccountType idAccountType) {
@@ -175,7 +211,7 @@ public class Account implements Serializable {
     }
 
     public Agency getIdAgency() {
-        return idAgency;
+        return this.idAgency;
     }
 
     public void setIdAgency(Agency idAgency) {
@@ -183,7 +219,7 @@ public class Account implements Serializable {
     }
 
     public CountryCode getIdCountryCode() {
-        return idCountryCode;
+        return this.idCountryCode;
     }
 
     public void setIdCountryCode(CountryCode idCountryCode) {
@@ -212,7 +248,7 @@ public class Account implements Serializable {
 
     @Override
     public String toString() {
-        return "db.home.bank.Account[ id=" + id + " ]";
+        return this.number;
     }
     
 }

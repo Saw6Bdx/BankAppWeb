@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package db.home.bank; 
+package db.home.bank;
+import utils.DateUtils;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
@@ -22,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Guest
+ * @author Charlotte
  */
 @Entity
 @XmlRootElement
@@ -36,6 +38,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "AccountManager.findByAssignementDate", query = "SELECT a FROM AccountManager a WHERE a.assignementDate = :assignementDate")})
 public class AccountManager implements Serializable {
 
+    /*  name VARCHAR(250) NOT NULL,
+	firstName VARCHAR(250) NOT NULL,
+	phone VARCHAR(250),
+	email VARCHAR(250),
+	assignementDate DATE NOT NULL,
+        idAgency INT NOT NULL,*/
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,15 +62,29 @@ public class AccountManager implements Serializable {
     @JoinColumn(name = "idAgency", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Agency idAgency;
-
+    
     public AccountManager() {
     }
 
     public AccountManager(Integer id) {
+        // levée d'exception nécessaire pour les id auto-incrémentés ?
         this.id = id;
     }
 
     public AccountManager(Integer id, String name, String firstName, Date assignementDate) {
+        if(name.isEmpty()) {
+            throw new IllegalArgumentException("The name cannot be empty.");
+        }
+        if(firstName.isEmpty()) {
+            throw new IllegalArgumentException("The firstName cannot be empty.");
+        }
+        if(assignementDate == null) {
+            throw new NullPointerException("The assignementDate cannot be null.");
+        }
+        if(assignementDate.getTime()>DateUtils.today().getTime()) {
+            throw new IllegalArgumentException("assignementDate cannot be in the future.");
+        }
+        
         this.id = id;
         this.name = name;
         this.firstName = firstName;
@@ -69,55 +92,80 @@ public class AccountManager implements Serializable {
     }
 
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Integer id) {
+        // levée d'exception nécessaire pour les id auto-incrémentés ?
         this.id = id;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
+        if(name.isEmpty()) {
+            throw new IllegalArgumentException("The name cannot be empty.");
+        }
         this.name = name;
     }
 
     public String getFirstName() {
-        return firstName;
+        return this.firstName;
     }
 
     public void setFirstName(String firstName) {
+        if(firstName.isEmpty()) {
+            throw new IllegalArgumentException("The firstName cannot be empty.");
+        }
         this.firstName = firstName;
     }
 
     public String getPhone() {
-        return phone;
+        return this.phone;
     }
 
     public void setPhone(String phone) {
+        if(phone == null) {
+            throw new NullPointerException("The phone cannot be null.");
+        }
+        if(!phone.matches("[0-9]+")) {
+            throw new IllegalArgumentException("The phone number must contain only numbers.");
+        }
         this.phone = phone;
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
+        if(email == null) {
+            throw new NullPointerException("The email cannot be null.");
+        }
+        if(!email.matches(".*@.*")) {
+            throw new IllegalArgumentException("The email address must contain an @.");
+        }
         this.email = email;
     }
 
     public Date getAssignementDate() {
-        return assignementDate;
+        return this.assignementDate;
     }
 
     public void setAssignementDate(Date assignementDate) {
+        if(assignementDate == null) {
+            throw new NullPointerException("The assignementDate cannot be null.");
+        }
+        if(assignementDate.getTime()>DateUtils.today().getTime()) {
+            throw new IllegalArgumentException("assignementDate cannot be in the future.");
+        }
         this.assignementDate = assignementDate;
     }
 
     public Agency getIdAgency() {
-        return idAgency;
+        return this.idAgency;
     }
 
     public void setIdAgency(Agency idAgency) {
@@ -146,7 +194,7 @@ public class AccountManager implements Serializable {
 
     @Override
     public String toString() {
-        return this.name + " " + this.firstName;
+        return (this.name + " " + this.firstName);
     }
     
 }

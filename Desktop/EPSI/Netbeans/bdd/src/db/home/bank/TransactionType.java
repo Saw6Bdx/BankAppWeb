@@ -12,16 +12,17 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id; 
+import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import utils.Check;
 
 /**
  *
- * @author Guest
+ * @author Charlotte
  */
 @Entity
 @XmlRootElement
@@ -30,7 +31,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "TransactionType.findById", query = "SELECT t FROM TransactionType t WHERE t.id = :id")
     , @NamedQuery(name = "TransactionType.findByType", query = "SELECT t FROM TransactionType t WHERE t.type = :type")})
 public class TransactionType implements Serializable {
-
+    /*  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	type VARCHAR(250) NOT NULL*/
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,12 +52,16 @@ public class TransactionType implements Serializable {
     }
 
     public TransactionType(Integer id, String type) {
+        Check.checkIsEmpty(type, "type");
+        if(!type.matches("[a-zA-Z]+")){
+            throw new IllegalArgumentException("type must contain only letters.");
+        }
         this.id = id;
         this.type = type;
     }
 
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Integer id) {
@@ -62,16 +69,20 @@ public class TransactionType implements Serializable {
     }
 
     public String getType() {
-        return type;
+        return this.type;
     }
 
     public void setType(String type) {
+        Check.checkIsEmpty(type, "type");
+        if(!type.matches("[a-zA-Z]+")){
+            throw new IllegalArgumentException("type must contain only letters.");
+        }
         this.type = type;
     }
 
     @XmlTransient
     public Collection<Transactions> getTransactionsCollection() {
-        return transactionsCollection;
+        return this.transactionsCollection;
     }
 
     public void setTransactionsCollection(Collection<Transactions> transactionsCollection) {
@@ -100,7 +111,7 @@ public class TransactionType implements Serializable {
 
     @Override
     public String toString() {
-        return "db.home.bank.TransactionType[ id=" + id + " ]";
+        return this.type;
     }
     
 }

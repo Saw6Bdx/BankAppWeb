@@ -21,17 +21,19 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Guest
+ * @author Mary, Nicolas ?
  */
 @Entity
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CountryCode.findAll", query = "SELECT c FROM CountryCode c")
-    , @NamedQuery(name = "CountryCode.findCode", query = "SELECT c.code FROM CountryCode c")
     , @NamedQuery(name = "CountryCode.findById", query = "SELECT c FROM CountryCode c WHERE c.id = :id")
     , @NamedQuery(name = "CountryCode.findByCode", query = "SELECT c FROM CountryCode c WHERE c.code = :code")})
 public class CountryCode implements Serializable {
 
+    /*  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	code CHAR(2) NOT NULL*/
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,12 +52,15 @@ public class CountryCode implements Serializable {
     }
 
     public CountryCode(Integer id, String code) {
+        if(code.isEmpty()){
+            throw new IllegalArgumentException("code can't be empty");
+        }
         this.id = id;
         this.code = code;
     }
 
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Integer id) {
@@ -63,10 +68,13 @@ public class CountryCode implements Serializable {
     }
 
     public String getCode() {
-        return code;
+        return this.code;
     }
 
     public void setCode(String code) {
+        if(code.isEmpty()){
+            throw new IllegalArgumentException("code can't be empty");
+        }
         this.code = code;
     }
 
@@ -96,12 +104,12 @@ public class CountryCode implements Serializable {
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
-        return true; 
+        return true;
     }
 
     @Override
     public String toString() {
-        return this.code;//"db.home.bank.CountryCode[ id=" + id + " ]";
+        return this.code;
     }
     
 }

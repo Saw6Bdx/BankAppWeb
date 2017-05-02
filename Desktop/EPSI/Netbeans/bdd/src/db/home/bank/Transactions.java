@@ -21,10 +21,11 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import utils.Check;
 
 /**
  *
- * @author Guest
+ * @author Mary
  */
 @Entity
 @XmlRootElement
@@ -38,7 +39,19 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Transactions.findByDayNb", query = "SELECT t FROM Transactions t WHERE t.dayNb = :dayNb")
     , @NamedQuery(name = "Transactions.findByComment", query = "SELECT t FROM Transactions t WHERE t.comment = :comment")})
 public class Transactions implements Serializable {
-
+    /*  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	label VARCHAR(250) NOT NULL,
+	amount DOUBLE(12,2) NOT NULL,
+	date DATE NOT NULL,
+	endDate DATE NOT NULL,
+	dayNb INT,
+	comment VARCHAR(250),
+	idTransactionType INT NOT NULL,
+	idCategory INT,
+	idRecipient INT,
+	idPeriodUnit INT,
+	idAccount INT NOT NULL,*/
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -80,6 +93,9 @@ public class Transactions implements Serializable {
     }
 
     public Transactions(Integer id, String label, double amount, Date date, Date endDate) {
+        Check.checkIsEmpty(label, "label");
+        Check.checkIsNull(date, "date");
+        Check.checkIsNull(endDate, "endDate");
         this.id = id;
         this.label = label;
         this.amount = amount;
@@ -88,7 +104,7 @@ public class Transactions implements Serializable {
     }
 
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Integer id) {
@@ -96,15 +112,16 @@ public class Transactions implements Serializable {
     }
 
     public String getLabel() {
-        return label;
+        return this.label;
     }
 
     public void setLabel(String label) {
+        Check.checkIsEmpty(label, "label");
         this.label = label;
     }
 
     public double getAmount() {
-        return amount;
+        return this.amount;
     }
 
     public void setAmount(double amount) {
@@ -112,39 +129,45 @@ public class Transactions implements Serializable {
     }
 
     public Date getDate() {
-        return date;
+        return this.date;
     }
 
     public void setDate(Date date) {
+        Check.checkIsNull(date, "date");
         this.date = date;
     }
 
     public Date getEndDate() {
-        return endDate;
+        return this.endDate;
     }
 
     public void setEndDate(Date endDate) {
+        Check.checkIsNull(endDate, "endDate");
         this.endDate = endDate;
     }
 
     public Integer getDayNb() {
-        return dayNb;
+        return this.dayNb;
     }
 
     public void setDayNb(Integer dayNb) {
+        if(dayNb<0 || dayNb>28){
+            throw new IllegalArgumentException("dayNb must be defined between 1 and 28.");
+        }
         this.dayNb = dayNb;
     }
 
     public String getComment() {
-        return comment;
+        return this.comment;
     }
 
     public void setComment(String comment) {
+        Check.checkIsNull(comment, "comment");
         this.comment = comment;
     }
 
     public Account getIdAccount() {
-        return idAccount;
+        return this.idAccount;
     }
 
     public void setIdAccount(Account idAccount) {
@@ -152,7 +175,7 @@ public class Transactions implements Serializable {
     }
 
     public Category getIdCategory() {
-        return idCategory;
+        return this.idCategory;
     }
 
     public void setIdCategory(Category idCategory) {
@@ -160,7 +183,7 @@ public class Transactions implements Serializable {
     }
 
     public PeriodUnit getIdPeriodUnit() {
-        return idPeriodUnit;
+        return this.idPeriodUnit;
     }
 
     public void setIdPeriodUnit(PeriodUnit idPeriodUnit) {
@@ -168,7 +191,7 @@ public class Transactions implements Serializable {
     }
 
     public Recipient getIdRecipient() {
-        return idRecipient;
+        return this.idRecipient;
     }
 
     public void setIdRecipient(Recipient idRecipient) {
@@ -176,7 +199,7 @@ public class Transactions implements Serializable {
     }
 
     public TransactionType getIdTransactionType() {
-        return idTransactionType;
+        return this.idTransactionType;
     }
 
     public void setIdTransactionType(TransactionType idTransactionType) {
@@ -205,7 +228,7 @@ public class Transactions implements Serializable {
 
     @Override
     public String toString() {
-        return this.label;//"db.home.bank.Transactions[ id=" + id + " ]";
+        return this.label;
     }
     
     public String getFormatDate() {

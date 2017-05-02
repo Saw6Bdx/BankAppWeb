@@ -7,6 +7,11 @@ import db.home.bank.Agency;
 import db.home.bank.Bank;
 import db.home.bank.CountryCode;
 import db.home.bank.Postcode;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.NamedQuery;
+import javax.persistence.PersistenceException;
+import javax.persistence.TypedQuery;
 
 /**
  *  
@@ -85,8 +90,26 @@ public class NewAccountWindowController extends ControllerBase {
     
     
     public int idAccountType(String str) {
+        
         int id = 0;
-        switch (str) {
+        
+        try {
+            EntityManager em = getMediator().createEntityManager();
+            TypedQuery<AccountType> qAccountType = em.createNamedQuery("AccountType.findAll", AccountType.class);
+            List<AccountType> accountTypeList = qAccountType.getResultList();
+            
+            for ( int i = 0 ; i < accountTypeList.size() ; i++ ) {
+                if ( str.equals(accountTypeList.get(id).getType()) ) {
+                    id = i;
+                }
+            }
+            
+            em.close();
+        } catch (PersistenceException e) {
+            
+        }
+        return id;
+        /*switch (str) {
             case "Current":
                 id = 1;
                 break;
@@ -94,13 +117,29 @@ public class NewAccountWindowController extends ControllerBase {
                 id = 2;
                 break;
         }
-        return id;
+        return id;*/
     }
     
     
     public int idCountryCode(String str) {
         int id = 1;
-        switch (str) {
+        try {
+            EntityManager em = getMediator().createEntityManager();
+            TypedQuery<CountryCode> qCountryCode = em.createNamedQuery("CountryCode.findAll", CountryCode.class);
+            List<CountryCode> countryCodeList = qCountryCode.getResultList();
+            
+            for ( int i = 0 ; i < countryCodeList.size() ; i++ ) {
+                if ( str.equals(countryCodeList.get(id).getCode()) ) {
+                    id = i;
+                }
+            }
+            
+            em.close();
+        } catch (PersistenceException e) {
+            
+        }
+        return id;
+        /*switch (str) {
             case "FR":
                 id = 1;
                 break;
@@ -123,13 +162,29 @@ public class NewAccountWindowController extends ControllerBase {
                 id = 7;
                 break;
         }
-        return id;
+        return id;*/
     }
     
     
     public int idBank(String str) {
         int id = 0;
-        switch (str) {
+        try {
+            EntityManager em = getMediator().createEntityManager();
+            TypedQuery<Bank> qBank = em.createNamedQuery("Bank.findAll", Bank.class);
+            List<Bank> bankList = qBank.getResultList();
+            
+            for ( int i = 0 ; i < bankList.size() ; i++ ) {
+                if ( str.equals(bankList.get(id).getName()) ) {
+                    id = i;
+                }
+            }
+            
+            em.close();
+        } catch (PersistenceException e) {
+            
+        }
+        return id;
+        /*switch (str) {
             case "BNP Paribas":
                 id = 1;
                 break;
@@ -146,7 +201,7 @@ public class NewAccountWindowController extends ControllerBase {
                 id = 5;
                 break;
         }
-        return id;
+        return id;*/
     }
     
 }

@@ -5,7 +5,7 @@
  */
 package db.home.bank;
 
-import java.io.Serializable; 
+import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -21,13 +21,12 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Guest
+ * @author Mary-Charlotte
  */
 @Entity
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "AccountType.findAll", query = "SELECT a FROM AccountType a")
-    , @NamedQuery(name = "AccountType.findType", query = "SELECT a.type FROM AccountType a")
     , @NamedQuery(name = "AccountType.findById", query = "SELECT a FROM AccountType a WHERE a.id = :id")
     , @NamedQuery(name = "AccountType.findByType", query = "SELECT a FROM AccountType a WHERE a.type = :type")})
 public class AccountType implements Serializable {
@@ -43,13 +42,21 @@ public class AccountType implements Serializable {
 
     public AccountType() {
     }
-
+    
     public AccountType(Integer id) {
         this.id = id;
     }
 
+    public AccountType(Integer id, String type) {
+        if(type.isEmpty()){
+            throw new IllegalArgumentException("type can't be empty");
+        }
+        this.id = id;
+        this.type = type;
+    }
+
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Integer id) {
@@ -57,10 +64,13 @@ public class AccountType implements Serializable {
     }
 
     public String getType() {
-        return type;
+        return this.type;
     }
 
     public void setType(String type) {
+        if(type.isEmpty()){
+            throw new IllegalArgumentException("type can't be empty");
+        }
         this.type = type;
     }
 
@@ -95,7 +105,6 @@ public class AccountType implements Serializable {
 
     @Override
     public String toString() {
-        //return "db.home.bank.AccountType[ id=" + id + " ]";
         return this.type;
     }
     

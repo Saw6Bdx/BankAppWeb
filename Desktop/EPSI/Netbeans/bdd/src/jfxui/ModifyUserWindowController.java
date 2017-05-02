@@ -61,7 +61,7 @@ public class ModifyUserWindowController extends ControllerBase {
     private void handleBtnOK(ActionEvent event) throws IOException {
 
         Holder holder = setHolderName.getValue();
-
+        System.out.println(txtHolderName.getText());
         String holderName = txtHolderName.getText();
         String holderFirstName = txtHolderFirstName.getText();
         String holderPhone = txtHolderPhone.getText();
@@ -82,7 +82,7 @@ public class ModifyUserWindowController extends ControllerBase {
         }
 
         if (Valid.isValidOnlyLetters(holderFirstName)) {
-            Query q = em.createQuery("UPDATE Holder t SET t.firstName=:pfirstname WHERE t.id=:pid");
+            Query q = em.createQuery("UPDATE Holder t SET t.firstname=:pfirstname WHERE t.id=:pid");
             q.setParameter("pfirstname", holderFirstName);
             q.setParameter("pid", holder.getId());
             q.executeUpdate();
@@ -95,12 +95,12 @@ public class ModifyUserWindowController extends ControllerBase {
             q.executeUpdate();
         }
 
-        if (Valid.isValidEmail(holderEmail)) {
-            Query q = em.createQuery("UPDATE Holder t SET t.email=:pemail WHERE t.id=:pid");
+        /*if (Valid.isValidEmail(holderEmail)) {
+            Query q = em.createQuery("UPDATE Holder t SET t.=:pemail WHERE t.id=:pid");
             q.setParameter("pemail", holderEmail);
             q.setParameter("pid", holder.getId());
             q.executeUpdate();
-        }
+        }*/
         
         /*if (Valid.isValidDateNoFuture(holderBirthday)) {
             Query q = em.createQuery("UPDATE Holder t SET t.birthday=:pbirthday WHERE t.id=:pid");

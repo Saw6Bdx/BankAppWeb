@@ -7,7 +7,7 @@ package db.home.bank;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic; 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,10 +20,12 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import utils.Check;
+import utils.Valid;
 
 /**
  *
- * @author Guest
+ * @author Mary, Nicolas ?
  */
 @Entity
 @XmlRootElement
@@ -34,6 +36,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Agency.findByAgencyCode", query = "SELECT a FROM Agency a WHERE a.agencyCode = :agencyCode")})
 public class Agency implements Serializable {
 
+    /*  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	agencyName VARCHAR(250) NOT NULL,
+	agencyCode CHAR(5) NOT NULL,
+	idAddress INT NOT NULL,
+	idBank INT NOT NULL,*/
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,13 +70,19 @@ public class Agency implements Serializable {
     }
 
     public Agency(Integer id, String agencyName, String agencyCode) {
+        Check.checkIsEmpty(agencyName, "agencyName");
+        Check.checkIsEmpty(agencyCode, "agencyCode");
+        if(agencyCode.length()!=5 || !agencyCode.matches("[0-9]+")){
+            throw new IllegalArgumentException("agencyCode must contain 5 digits.");
+        }
+
         this.id = id;
         this.agencyName = agencyName;
         this.agencyCode = agencyCode;
     }
 
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Integer id) {
@@ -76,23 +90,28 @@ public class Agency implements Serializable {
     }
 
     public String getAgencyName() {
-        return agencyName;
+        return this.agencyName;
     }
 
     public void setAgencyName(String agencyName) {
+        Check.checkIsEmpty(agencyName, "agencyName");
         this.agencyName = agencyName;
     }
 
     public String getAgencyCode() {
-        return agencyCode;
+        return this.agencyCode;
     }
 
     public void setAgencyCode(String agencyCode) {
+        Check.checkIsEmpty(agencyCode, "agencyCode");
+        if(agencyCode.length()!=5 || !agencyCode.matches("[0-9]+")){
+            throw new IllegalArgumentException("agencyCode must contain 5 digits.");
+        }
         this.agencyCode = agencyCode;
     }
 
     public Address getIdAddress() {
-        return idAddress;
+        return this.idAddress;
     }
 
     public void setIdAddress(Address idAddress) {
@@ -100,7 +119,7 @@ public class Agency implements Serializable {
     }
 
     public Bank getIdBank() {
-        return idBank;
+        return this.idBank;
     }
 
     public void setIdBank(Bank idBank) {
@@ -109,7 +128,7 @@ public class Agency implements Serializable {
 
     @XmlTransient
     public Collection<AccountManager> getAccountManagerCollection() {
-        return accountManagerCollection;
+        return this.accountManagerCollection;
     }
 
     public void setAccountManagerCollection(Collection<AccountManager> accountManagerCollection) {
@@ -118,7 +137,7 @@ public class Agency implements Serializable {
 
     @XmlTransient
     public Collection<Account> getAccountCollection() {
-        return accountCollection;
+        return this.accountCollection;
     }
 
     public void setAccountCollection(Collection<Account> accountCollection) {
@@ -147,7 +166,7 @@ public class Agency implements Serializable {
 
     @Override
     public String toString() {
-        return "db.home.bank.Agency[ id=" + id + " ]";
+        return this.agencyName;
     }
     
 }
