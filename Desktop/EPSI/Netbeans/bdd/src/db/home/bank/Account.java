@@ -248,7 +248,7 @@ public class Account implements Serializable {
 
     @Override
     public String toString() {
-        return this.number;
+        return this.idAgency + "\n" + this.number + "\n" + this.idAccountType;
     }
     
 }

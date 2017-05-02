@@ -25,14 +25,18 @@ import utils.AlertMessage;
 public class ContactWindowController extends ControllerBase {
     @FXML private Label labelBank, labelAgency, labelAddress, labelManager, labelPhone, labelEmail;
     
-    private String flagAccountType;
+    private int flagAccount;
     
     @Override
     public void initialize(Mediator mediator) {
     }
     
-    public void setFlagAccountType(String flagAccountType) {
-        this.flagAccountType = flagAccountType;
+    /**
+     * Method which assigns the flagAccount id under mouse_clicked in AppWindow to this.flagAccount
+     * @param flagAccount id under mouse_clicked
+     */
+    public void setFlagAccount(int flagAccount) {
+        this.flagAccount = flagAccount;
     }
     
     public void initContactWindowController(Mediator mediator) {
@@ -48,22 +52,15 @@ public class ContactWindowController extends ControllerBase {
             TypedQuery<AccountManager> qManagerPhone = em.createQuery("SELECT am.phone FROM AccountManager am JOIN am.idAgency ag JOIN ag.accountCollection a WHERE a.id =:acc", AccountManager.class);
             TypedQuery<AccountManager> qManagerEmail = em.createQuery("SELECT am.email FROM AccountManager am JOIN am.idAgency ag JOIN ag.accountCollection a WHERE a.id =:acc", AccountManager.class);
 
-            int idAccount = 0;
-            if (flagAccountType.equals("Current")) {
-                idAccount = 1;
-            }
-            else {
-                idAccount = 2;
-            }
             
-            qBank.setParameter("acc", idAccount);
-            qAgency.setParameter("acc", idAccount);
-            qAddress.setParameter("acc", idAccount);
-            qPostcode.setParameter("acc", idAccount);
-            qManagerName.setParameter("acc", idAccount);
-            qManagerFirstname.setParameter("acc", idAccount);
-            qManagerPhone.setParameter("acc", idAccount);
-            qManagerEmail.setParameter("acc", idAccount);
+            qBank.setParameter("acc", this.flagAccount);
+            qAgency.setParameter("acc", this.flagAccount);
+            qAddress.setParameter("acc", this.flagAccount);
+            qPostcode.setParameter("acc", this.flagAccount);
+            qManagerName.setParameter("acc", this.flagAccount);
+            qManagerFirstname.setParameter("acc", this.flagAccount);
+            qManagerPhone.setParameter("acc", this.flagAccount);
+            qManagerEmail.setParameter("acc", this.flagAccount);
 
             this.labelBank.setText(("Bank : " + qBank.getResultList()).replace("[", "").replace("]", ""));
             this.labelAgency.setText(("Agency : " + qAgency.getResultList()).replace("[", "").replace("]", ""));  
