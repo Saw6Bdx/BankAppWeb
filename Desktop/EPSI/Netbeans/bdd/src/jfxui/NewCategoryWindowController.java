@@ -114,7 +114,7 @@ public class NewCategoryWindowController extends ControllerBase {
     private void handleBtnCancel(ActionEvent event) throws IOException {
 
         closeCurrentWindow(btnCancel);
-        goToAnotherWindow("LoginWindow.fxml");
+        goToAnotherWindow("AppWindow.fxml");
 
     }
 

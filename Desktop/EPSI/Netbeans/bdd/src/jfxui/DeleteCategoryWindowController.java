@@ -20,7 +20,7 @@ import javax.persistence.PersistenceException;
 import utils.AlertMessage;
 
 /**
- *
+ * Comment faire si on supprime une catégorie qui était affectée à une transaction ?
  * @author Mary
  */
 public class DeleteCategoryWindowController extends ControllerBase {
@@ -37,11 +37,10 @@ public class DeleteCategoryWindowController extends ControllerBase {
     public void initialize(Mediator mediator) {
 
         try {
-            // Loading categories field
+            // Loading categories field (id > 14 because with the app there are 14 categories available that cannot be deleted)
             EntityManager em = getMediator().createEntityManager();
             List<Category> categoryList = em.createQuery("SELECT c FROM Category c WHERE c.id > 14").getResultList();
-            //List<Category> categoryList = em.createNamedQuery("Category.findAll", Category.class).getResultList();
-
+            
             this.setCategoriesName.setItems(FXCollections.observableArrayList(categoryList));
             em.close();
 
