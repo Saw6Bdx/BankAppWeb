@@ -78,8 +78,6 @@ public class NewCategoryWindowController extends ControllerBase {
             }
 
             closeCurrentWindow(this.btnCreate);
-            goToAnotherWindow("AppWindow.fxml"); // going to the application main page
-            //WindowManagement.goToAnotherWindow(getClass().getResource("AppWindow.fxml"));
 
         } catch (PersistenceException e) {
             this.btnCreate.setDisable(true);
@@ -114,11 +112,9 @@ public class NewCategoryWindowController extends ControllerBase {
     private void handleBtnCancel(ActionEvent event) throws IOException {
 
         closeCurrentWindow(btnCancel);
-        goToAnotherWindow("AppWindow.fxml");
-
+        
     }
 
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!! Ces fonctions pourraient être déplacés dans une classe du package utils 
     private void closeCurrentWindow(Button btn) {
         //Close current window
         Stage current = (Stage) btn.getScene().getWindow();

@@ -97,7 +97,6 @@ public class NewUserWindowController extends ControllerBase {
                                         // All the fields are correct, then it is possible to create objects
                                         Postcode postcode = new Postcode(null,Integer.parseInt(postCode),city);
                                         Address address = new Address(null,addLine1);
-                                        //Holder holder = new Holder(null,name,firstName,login,pwd);
                                         Holder holder = new Holder(null,name,firstName,login,get_SHA_512_SecurePassword(pwd,"1"));
     
                                         // Writing info into the database
@@ -192,11 +191,11 @@ public class NewUserWindowController extends ControllerBase {
         current.close();
         
         // Going back to the previous stage        
-        ControllerBase controller = ControllerBase.loadFxml("LoginWindow.fxml", getMediator());
+        /*ControllerBase controller = ControllerBase.loadFxml("LoginWindow.fxml", getMediator());
         Scene scene = new Scene(controller.getParent());
         Stage stage = new Stage();
         stage.setScene(scene);
-        stage.show();
+        stage.show();*/
         
     }
         

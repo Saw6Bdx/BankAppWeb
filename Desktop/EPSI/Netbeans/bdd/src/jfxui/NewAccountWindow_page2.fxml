@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -15,20 +16,21 @@
             <TextField fx:id="txtAgencyName" layoutX="136.0" layoutY="20.0" prefHeight="25.0" prefWidth="210.0" promptText="Agency name" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="40.0" />
             <Label alignment="CENTER_RIGHT" layoutX="61.0" layoutY="65.0" text="Agency code" AnchorPane.rightAnchor="265.0" />
             <TextField fx:id="txtAgencyCode" layoutX="135.0" layoutY="60.0" prefHeight="25.0" prefWidth="210.0" promptText="Agency code" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="40.0" />
-            <Label alignment="CENTER_RIGHT" layoutX="87.0" layoutY="105.0" text="Bank name" AnchorPane.rightAnchor="265.0" />
-            <ChoiceBox fx:id="txtBankName" layoutX="136.0" layoutY="100.0" prefWidth="150.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="40.0" />
-            <Label alignment="CENTER_RIGHT" layoutX="87.0" layoutY="145.0" text="Bank code" AnchorPane.rightAnchor="265.0" />
-            <TextField fx:id="txtBankCode" layoutX="136.0" layoutY="139.0" prefHeight="25.0" prefWidth="210.0" promptText="Bank code" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="40.0" />
-            <Label alignment="CENTER_RIGHT" layoutX="49.0" layoutY="226.0" text="Address" AnchorPane.rightAnchor="265.0" />
-            <TextField fx:id="txtAgencyAddressLine1" layoutX="137.0" layoutY="221.0" prefHeight="25.0" prefWidth="210.0" promptText="First line" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="40.0" />
-            <TextField fx:id="txtAgencyAddressLine2" layoutX="135.0" layoutY="259.0" prefHeight="25.0" prefWidth="210.0" promptText="Second line (optional)" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="40.0" />
-            <Label alignment="CENTER_RIGHT" layoutX="84.0" layoutY="308.0" text="Postcode" AnchorPane.rightAnchor="265.0" />
-            <TextField fx:id="txtAgencyPostCode" layoutX="135.0" layoutY="301.0" prefHeight="25.0" prefWidth="210.0" promptText="Postcode" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="40.0" />
-            <Label alignment="CENTER_RIGHT" layoutX="58.0" layoutY="348.0" text="City" AnchorPane.rightAnchor="265.0" />
-            <TextField fx:id="txtAgencyCity" layoutX="146.0" layoutY="343.0" prefHeight="25.0" prefWidth="210.0" promptText="City" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="40.0" />
-            <Button fx:id="btnPrevious" layoutX="168.0" layoutY="411.0" mnemonicParsing="false" onAction="#handleBtnPrevious" prefHeight="27.0" prefWidth="104.0" text="&lt; Previous" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="130.0" />
-            <Button fx:id="btnNext" layoutX="272.0" layoutY="411.0" mnemonicParsing="false" onAction="#handleBtnNext" prefHeight="27.0" prefWidth="96.0" text="Next &gt;" AnchorPane.leftAnchor="260.0" AnchorPane.rightAnchor="40.0" />
-            <Button layoutX="358.0" layoutY="101.0" mnemonicParsing="false" text="+" />
+            <Label alignment="CENTER_RIGHT" layoutX="54.60000000000002" layoutY="106.0" text="Bank name" AnchorPane.rightAnchor="265.0" />
+            <ChoiceBox fx:id="txtBankName" layoutX="135.4" layoutY="101.0" prefWidth="150.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="40.0" />
+            <CheckBox fx:id="checkValue" onAction="#handleCheckBox" layoutX="60.0" layoutY="142.0" mnemonicParsing="false" text="Not available ?" AnchorPane.leftAnchor="50.0" />
+            <TextField fx:id="setBankName" layoutX="186.0" layoutY="138.0" prefHeight="25.0" prefWidth="210.0" promptText="Enter the bank name ..." AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="40.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="57.60000000000002" layoutY="146.0" text="Bank code" AnchorPane.rightAnchor="265.0" AnchorPane.topAnchor="170.0" />
+            <TextField fx:id="txtBankCode" layoutX="135.4" layoutY="140.0" prefHeight="25.0" prefWidth="210.0" promptText="Bank code" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="165.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="36.0" layoutY="248.0" text="Address" AnchorPane.rightAnchor="265.0" />
+            <TextField fx:id="txtAgencyAddressLine1" layoutX="132.0" layoutY="243.0" prefHeight="25.0" prefWidth="210.0" promptText="First line" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="40.0" />
+            <TextField fx:id="txtAgencyAddressLine2" layoutX="132.0" layoutY="281.0" prefHeight="25.0" prefWidth="210.0" promptText="Second line (optional)" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="40.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="62.0" layoutY="330.0" text="Postcode" AnchorPane.rightAnchor="265.0" />
+            <TextField fx:id="txtAgencyPostCode" layoutX="132.0" layoutY="323.0" prefHeight="25.0" prefWidth="210.0" promptText="Postcode" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="40.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="95.0" layoutY="370.0" text="City" AnchorPane.rightAnchor="265.0" />
+            <TextField fx:id="txtAgencyCity" layoutX="132.0" layoutY="365.0" prefHeight="25.0" prefWidth="210.0" promptText="City" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="40.0" />
+            <Button fx:id="btnPrevious" layoutX="168.0" layoutY="411.0" mnemonicParsing="false" onAction="#handleBtnPrevious" prefHeight="27.0" prefWidth="104.0" text="&lt; Previous" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="120.0" />
+            <Button fx:id="btnNext" layoutX="272.0" layoutY="411.0" mnemonicParsing="false" onAction="#handleBtnNext" prefHeight="27.0" prefWidth="96.0" text="Next &gt;" AnchorPane.leftAnchor="270.0" AnchorPane.rightAnchor="40.0" />
          </children></AnchorPane>
   </content> 
 </TitledPane>

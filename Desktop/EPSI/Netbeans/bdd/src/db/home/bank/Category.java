@@ -8,6 +8,7 @@ package db.home.bank;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -44,7 +45,7 @@ public class Category implements Serializable {
     private String label;
     @OneToMany(mappedBy = "idCategory")
     private Collection<Transactions> transactionsCollection;
-    @OneToMany(mappedBy = "idLabel")
+    @OneToMany(mappedBy = "idLabel", cascade = CascadeType.PERSIST)
     private Collection<Category> categoryCollection;
     @JoinColumn(name = "idLabel", referencedColumnName = "id")
     @ManyToOne

@@ -82,7 +82,7 @@ public class NewTransactionsWindowController extends ControllerBase {
         } catch (PersistenceException e) {
             
         }
-        return id;
+        return id+1;
         /*switch (str) {
             case "1324350971":
                 id = 1;
@@ -111,7 +111,7 @@ public class NewTransactionsWindowController extends ControllerBase {
         } catch (PersistenceException e) {
             
         }
-        return id;
+        return id+1;
         /*switch (str) {
             case "Transfer":
                 id = 1;
@@ -144,7 +144,7 @@ public class NewTransactionsWindowController extends ControllerBase {
             
             for ( int i = 0 ; i < categoryList.size() ; i++ ) {
                 if ( str.equals(categoryList.get(i).getLabel()) ) {
-                    id = i;
+                    id = categoryList.get(i).getId();
                 }
             }
             
@@ -283,11 +283,9 @@ public class NewTransactionsWindowController extends ControllerBase {
                         idAccount(transactionsAccount.getNumber()) == 0 ? null : idAccount(transactionsAccount.getNumber())
                         );
                         
-                        
                         TransactionsBdd.setIdTransactionType(transactionTypeBdd);
                         TransactionsBdd.setIdAccount(AccountBdd);
                         TransactionsBdd.setIdCategory(CategoryBdd);
-                        
                         
                         EntityManager em = getMediator().createEntityManager();
 

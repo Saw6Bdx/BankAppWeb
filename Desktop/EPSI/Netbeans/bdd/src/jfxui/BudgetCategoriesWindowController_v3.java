@@ -13,11 +13,9 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
@@ -33,15 +31,19 @@ public class BudgetCategoriesWindowController_v3 extends ControllerBase {
     private Label labelAmount, labelPercentage, labelTotal;
     @FXML
     private ChoiceBox<Category> setCategoryList;
-
     @FXML
     private Button btnOK;
 
     private String currency = "€"; // parameter to be set according to the currency
+    private int flagIdAccount;
 
     @Override
     public void initialize(Mediator mediator) {
 
+    }
+    
+    public void initBudgetCategoriesWindowController(Mediator mediator){
+        
         try {
             EntityManager em = mediator.createEntityManager();
             // Getting all the categories available
@@ -55,9 +57,17 @@ public class BudgetCategoriesWindowController_v3 extends ControllerBase {
             this.btnOK.setDisable(true);
             AlertMessage.processPersistenceException(e);
         }
-
+        
     }
-
+    
+    /**
+     * Method which assigns the flagIdAccount under mouse_clicked in AppWindow to this.flagAccount
+     * @param flagAccount id under mouse_clicked
+     */
+    public void setFlagAccount(int flagIdAccount) {
+        this.flagIdAccount = flagIdAccount;
+    }
+    
     /**
      * Function which calculate the round value of a double
      *
@@ -80,8 +90,10 @@ public class BudgetCategoriesWindowController_v3 extends ControllerBase {
         // Getting all the categories available
         TypedQuery<Category> qCategory = em.createQuery("SELECT a FROM Category a", Category.class);
         List<Category> categoryList = qCategory.getResultList();
-        // Getting all the transactions, and its sum
-        TypedQuery<Transactions> qTransactions = em.createQuery("SELECT b FROM Transactions b", Transactions.class);
+        
+        // Getting all the transactions, and its sum, according to one account
+        TypedQuery<Transactions> qTransactions = em.createQuery("SELECT b FROM Transactions b WHERE b.idAccount.id=:pacc", Transactions.class);
+        qTransactions.setParameter("pacc", this.flagIdAccount);
         List<Transactions> transactionsList = qTransactions.getResultList();
 
         // Variables setting
@@ -133,11 +145,6 @@ public class BudgetCategoriesWindowController_v3 extends ControllerBase {
 
     @FXML
     private void handleButtonOK(ActionEvent event) throws IOException {
-        ControllerBase controller = (AppWindowController) ControllerBase.loadFxml("AppWindow.fxml", getMediator());
-        Scene scene = new Scene(controller.getParent());
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
         //Hide current window
         ((Node) (event.getSource())).getScene().getWindow().hide();
     }

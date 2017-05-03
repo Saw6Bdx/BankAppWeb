@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
@@ -30,19 +31,38 @@ import utils.Valid;
  */
 public class NewAccountWindow_page2Controller extends NewAccountWindowController {//ControllerBase {
 
-    @FXML private TextField txtAgencyName;
-    @FXML private TextField txtAgencyCode;
-    @FXML private ChoiceBox<Bank> txtBankName;
-    @FXML private TextField txtBankCode;
-    @FXML private TextField txtAgencyAddressLine1;
-    @FXML private TextField txtAgencyAddressLine2;
-    @FXML private TextField txtAgencyPostCode;
-    @FXML private TextField txtAgencyCity;
-    @FXML private Button btnPrevious;
-    @FXML private Button btnNext;
+    @FXML
+    private TextField txtAgencyName;
+    @FXML
+    private TextField txtAgencyCode;
+    @FXML
+    private ChoiceBox<Bank> txtBankName;
+    @FXML
+    private CheckBox checkValue;
+    @FXML
+    private TextField setBankName;
+    @FXML
+    private TextField txtBankCode;
+    @FXML
+    private TextField txtAgencyAddressLine1;
+    @FXML
+    private TextField txtAgencyAddressLine2;
+    @FXML
+    private TextField txtAgencyPostCode;
+    @FXML
+    private TextField txtAgencyCity;
+    @FXML
+    private Button btnPrevious;
+    @FXML
+    private Button btnNext;
+    
+    private boolean flagSetBankName;
 
     @Override
     public void initialize(Mediator mediator) {
+        
+        this.flagSetBankName = true;
+        this.setBankName.setDisable(this.flagSetBankName);
 
         try {
             EntityManager em = mediator.createEntityManager();
@@ -57,11 +77,24 @@ public class NewAccountWindow_page2Controller extends NewAccountWindowController
     }
 
     @FXML
+    private void handleCheckBox(ActionEvent event) throws IOException {
+        this.flagSetBankName = (this.flagSetBankName == true ? false : true);
+        this.setBankName.setDisable(this.flagSetBankName);
+    }
+    
+    @FXML
     private void handleBtnNext(ActionEvent event) throws IOException {
 
         String agencyName = txtAgencyName.getText();
         String agencyCode = txtAgencyCode.getText();
-        Bank bankName = txtBankName.getValue();
+        String bankName_set = "";
+        Bank bankName_choice = new Bank();
+        if (this.checkValue.isSelected()) {
+            bankName_set = this.setBankName.getText();
+        }
+        else {
+            bankName_choice = txtBankName.getValue();
+        }
         String bankCode = txtBankCode.getText();
         String agencyAddressLine1 = txtAgencyAddressLine1.getText();
         String agencyAddressLine2 = txtAgencyAddressLine2.getText();
@@ -70,42 +103,46 @@ public class NewAccountWindow_page2Controller extends NewAccountWindowController
 
         // Check the fields
         if (Valid.isValidOnlyLetters(agencyName)) { // que des lettres + hyphen + apostrophe
-            if (Valid.isValidOnlyNumber(agencyCode) && agencyCode.length()==5 ) { // que des chiffres et 5 caractères
+            if (Valid.isValidOnlyNumber(agencyCode) && agencyCode.length() == 5) { // que des chiffres et 5 caractères
                 if (Valid.isValidOnlyNumber(bankCode)) { // que des chiffres 
                     if (Valid.isValidAddress(agencyAddressLine1)) {
                         if (Valid.isValidPostCode(agencyPostCode)) {
                             if (Valid.isValidOnlyLetters(agencyCity)) {
 
                                 // Temporary back-up 
-                                
                                 // ... table AGENCY
                                 Agency agencyObj = new Agency();
                                 agencyObj.setAgencyCode(agencyCode);
                                 agencyObj.setAgencyName(agencyName);
-                                
+
                                 // ... table BANK
                                 Bank bankObj = new Bank();
                                 bankObj.setBankCode(bankCode);
-                                bankObj.setName(bankName.toString());
-                                
+                                if (this.checkValue.isSelected()) {
+                                    bankObj.setName(bankName_set);
+                                }
+                                else {
+                                    bankObj.setName(bankName_choice.toString());
+                                }
+
                                 // ... table ADDRESS
                                 Address addressObj = new Address();
                                 addressObj.setLine1(agencyAddressLine1);
                                 if (!agencyAddressLine2.isEmpty()) {
                                     addressObj.setLine2(agencyAddressLine2);
                                 }
-                                
+
                                 // ... table POSTCODE
                                 Postcode postCodeObj = new Postcode();
                                 postCodeObj.setCity(agencyCity);
                                 postCodeObj.setPostcode(Integer.parseInt(agencyPostCode));
-                                
+
                                 // Going to the next "new account" window
                                 NewAccountWindow_page3Controller controller = (NewAccountWindow_page3Controller) ControllerBase.loadFxml(
                                         "NewAccountWindow_page3.fxml",
                                         getMediator()
                                 );
-                                
+
                                 // Transfer informations of Controller 1
                                 AccountType accountTypeObj = new AccountType(null);
                                 accountTypeObj.setType(getAccountType().getType());
@@ -121,15 +158,15 @@ public class NewAccountWindow_page2Controller extends NewAccountWindowController
                                 }
                                 accountObj.setIdAccountType(accountTypeObj);
                                 controller.setAccount(accountObj);
-                                
+
                                 controller.setCountryCode(new CountryCode(null, getCountryCode().getCode()));
-                                
+
                                 // Saving informations of Controller 2
                                 controller.setAddress(addressObj);
                                 controller.setBank(bankObj);
                                 controller.setPostcode(postCodeObj);
                                 controller.setAgency(agencyObj);
-                                        
+
                                 Scene scene = new Scene(controller.getParent());
                                 Stage stage = new Stage();
                                 stage.setScene(scene);
@@ -139,34 +176,27 @@ public class NewAccountWindow_page2Controller extends NewAccountWindowController
                                 Stage current = (Stage) btnNext.getScene().getWindow();
                                 current.close();
 
-                            }
-                            else {
+                            } else {
                                 AlertMessage.alertMessage("agency city", "Only letters, hyphen and apostroph allowed");
                             }
-                        }
-                        else {
+                        } else {
                             AlertMessage.alertMessage("post code", "Only numbers allowed");
                         }
-                    }
-                    else {
+                    } else {
                         AlertMessage.alertMessage("agency adress", "Cannot be empty");
                     }
-                }
-                else {
+                } else {
                     AlertMessage.alertMessage("bank code", "Only numbers");
                 }
-            }
-            else {
+            } else {
                 AlertMessage.alertMessage("agency code", "Only numbers");
             }
-        }
-        else {
+        } else {
             AlertMessage.alertMessage("agency name", "Only letters, hyphen and postroph allowed");
         }
 
     }
 
-    
     @FXML
     private void handleBtnPrevious(ActionEvent event) throws IOException {
 

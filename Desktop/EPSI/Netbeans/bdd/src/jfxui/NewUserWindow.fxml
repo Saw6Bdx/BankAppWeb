@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TitledPane?> 
 <?import javafx.scene.layout.AnchorPane?>
 
-<TitledPane alignment="CENTER" animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="400.0" text="Mon appli - New User" textAlignment="CENTER" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxui.NewUserWindowController">
+<TitledPane alignment="CENTER" animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="400.0" text="BankApp - New User" textAlignment="CENTER" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxui.NewUserWindowController">
 <content>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="581.0" prefWidth="398.0">
          <children>
@@ -28,8 +28,8 @@
             <PasswordField fx:id="txtPwd" layoutX="136.0" layoutY="464.0" prefHeight="27.0" prefWidth="211.0" promptText="********" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="40.0" />
             <Label alignment="CENTER_RIGHT" layoutX="14.0" layoutY="507.0" text="Confirm Password" AnchorPane.rightAnchor="265.0" />
             <PasswordField fx:id="txtConfirmPwd" layoutX="136.0" layoutY="502.0" prefHeight="27.0" prefWidth="211.0" promptText="********" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="40.0" />
-            <Button fx:id="btnCreate" layoutX="200.0" layoutY="551.0" mnemonicParsing="false" onAction="#handleBtnCreate" prefHeight="27.0" prefWidth="64.0" text="Create" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="120.0" />
-            <Button fx:id="btnCancel" layoutX="272.0" layoutY="551.0" mnemonicParsing="false" onAction="#handleBtnCancel" prefHeight="27.0" prefWidth="74.0" text="Cancel" AnchorPane.leftAnchor="270.0" AnchorPane.rightAnchor="40.0" />
+            <Button fx:id="btnCancel" layoutX="200.0" layoutY="551.0" mnemonicParsing="false" onAction="#handleBtnCancel" prefHeight="27.0" prefWidth="64.0" text="Cancel" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="120.0" />
+            <Button fx:id="btnCreate" layoutX="272.0" layoutY="551.0" mnemonicParsing="false" onAction="#handleBtnCreate" prefHeight="27.0" prefWidth="74.0" text="Create" AnchorPane.leftAnchor="270.0" AnchorPane.rightAnchor="40.0" />
             <Label alignment="CENTER_RIGHT" layoutX="72.0" layoutY="242.0" text="Address" AnchorPane.rightAnchor="265.0" />
             <TextField fx:id="txtAddressLine1" layoutX="136.0" layoutY="238.0" prefHeight="25.0" prefWidth="210.0" promptText="First line" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="40.0" />
             <TextField fx:id="txtAddressLine2" layoutX="136.0" layoutY="276.0" prefHeight="25.0" prefWidth="210.0" promptText="Second line (optional)" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="40.0" />
