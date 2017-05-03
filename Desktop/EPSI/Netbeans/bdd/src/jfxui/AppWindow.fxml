@@ -37,26 +37,22 @@
                         <MenuItem mnemonicParsing="false" onAction="#handleMenuModifyAccountManager" text="Modify account manager..." />
                         <MenuItem mnemonicParsing="false" onAction="#handleMenuDeleteAccountManager" text="Delete account manager..." />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleMenuEditRibIban" text="Edit Rib/Iban" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuAssignNewHolder" text="Assign a new holder..." />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Cancel" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuEditRibIban" text="Edit Rib/Iban" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="My transactions">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#handleMenuEditNewTransaction" text="New transaction..." />
                     <MenuItem mnemonicParsing="false" text="Delete transaction" />
-                    <SeparatorMenuItem mnemonicParsing="false" />
-                    <MenuItem mnemonicParsing="false" text="Cancel" />
                   </items>
                 </Menu>
                   <Menu mnemonicParsing="false" text="My budget">
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleMenuBudgetCategories" text="My categories..." />
-                        <MenuItem mnemonicParsing="false" onAction="#handleMenuBudgetNewCategory" text="New category..." />
-                        <MenuItem mnemonicParsing="false" onAction="#handleMenuBudgetDeleteCategory" text="Delete category" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Cancel" />
+                        <MenuItem mnemonicParsing="false" text="New category..." />
+                        <MenuItem mnemonicParsing="false" text="Delete category" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="My favorites">

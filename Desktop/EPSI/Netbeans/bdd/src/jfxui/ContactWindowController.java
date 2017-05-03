@@ -24,15 +24,15 @@ import utils.AlertMessage;
  */
 public class ContactWindowController extends ControllerBase {
     @FXML private Label labelBank, labelAgency, labelAddress, labelManager, labelPhone, labelEmail;
-    
     private int flagAccount;
+
     
     @Override
     public void initialize(Mediator mediator) {
     }
     
     /**
-     * Method which assigns the flagAccount id under mouse_clicked in AppWindow to this.flagAccount
+     * Method which assigns the Account id under mouse_clicked in AppWindow to this.flagAccount
      * @param flagAccount id under mouse_clicked
      */
     public void setFlagAccount(int flagAccount) {
@@ -87,5 +87,4 @@ public class ContactWindowController extends ControllerBase {
             AlertMessage.processPersistenceException(e);
         }
     }
-    
 }

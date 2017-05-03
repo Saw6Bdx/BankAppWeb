@@ -4,6 +4,7 @@ import db.home.bank.Account;
 import db.home.bank.Agency;
 import db.home.bank.Bank;
 import db.home.bank.CountryCode;
+import db.home.bank.Holder;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,9 +13,9 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TitledPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -38,21 +39,30 @@ public class AppWindowController extends ControllerBase {
     @FXML
     private AnchorPane contact;
     @FXML
-    private Parent root;
+    private TitledPane root;
     @FXML
     private ListView<Account> listAccount;
-
+    
+    public void setFlagHolder(int flagHolder) {
+        this.flagHolder = flagHolder;
+    }
+    
     @Override
-    public void initialize(Mediator mediator) {
+    public void initialize(Mediator mediator){
+        // empty initialization
+    }
+    
+    public void initAppWindowController(Mediator mediator) {
         this.mediator = mediator;
         try {
             EntityManager em = mediator.createEntityManager();
+            TypedQuery<Holder> qHolder = em.createQuery("SELECT h FROM Holder h WHERE h.id =:holder", Holder.class);
+            this.root.setText("BankApp : " + qHolder.setParameter("holder", this.flagHolder).getSingleResult());
             // Getting all the accounts available
-            TypedQuery<Account> qAccount = em.createQuery("SELECT a FROM Account a", Account.class);
-            List<Account> accountList = qAccount.getResultList();
+            TypedQuery<Account> qAccount = em.createQuery("SELECT a FROM Account a JOIN a.holderCollection h WHERE h.id =:holder", Account.class);
+            List<Account> accountList = qAccount.setParameter("holder", this.flagHolder).getResultList();
 
             this.listAccount.setItems(FXCollections.observableArrayList(accountList));
-            
             this.emf =  Persistence.createEntityManagerFactory("BankAppPU");
             
             em.close();
@@ -71,15 +81,16 @@ public class AppWindowController extends ControllerBase {
                 "TransactionsWindow.fxml",
                 this.mediator
         );
-        controller.setFlagAccount(this.listAccount.getSelectionModel().getSelectedItem().getId());
-        controller.initTransactionsWindowController(this.mediator);
+        this.flagAccount = this.listAccount.getSelectionModel().getSelectedItem().getId();
+        controller.setFlagAccount(this.flagAccount);
+        controller.initTransactionsWindowController();//this.mediator);
         content.getChildren().setAll(controller.getParent());
 
         ContactWindowController controller2 = (ContactWindowController) ControllerBase.loadFxml(
                 "ContactWindow.fxml",
                 this.mediator
         );
-        controller2.setFlagAccount(this.listAccount.getSelectionModel().getSelectedItem().getId());
+        controller2.setFlagAccount(this.flagAccount);
         controller2.initContactWindowController(this.mediator);
         contact.getChildren().setAll(controller2.getParent());
     }
@@ -137,12 +148,13 @@ public class AppWindowController extends ControllerBase {
     @FXML
     private void handleMenuEditNewAccount(ActionEvent event) throws IOException {
         
-        ControllerBase controller = ControllerBase.loadFxml("NewAccountWindow_page1.fxml", this.mediator);
+        NewAccountWindowController controller = (NewAccountWindowController) ControllerBase.loadFxml("NewAccountWindow_page1.fxml", this.mediator);
+        controller.setFlagHolder(this.flagHolder);
         Scene scene = new Scene(controller.getParent());
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
-
+        
         // New "account" button in the AppWindow
         // TO BE IMPLEMENTED ...
     }
@@ -168,6 +180,15 @@ public class AppWindowController extends ControllerBase {
     }
 
     @FXML
+    private void handleMenuAssignNewHolder(ActionEvent event) throws IOException{
+        ControllerBase controller = ControllerBase.loadFxml("AssignNewHolder.fxml", this.mediator);
+        Scene scene = new Scene(controller.getParent());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    @FXML
     private void handleMenuEditRibIban(ActionEvent event) throws IOException {
         EntityManager em = getMediator().createEntityManager();
         TypedQuery<Bank> qBank = em.createQuery("SELECT b FROM Bank b JOIN b.agencyCollection ag JOIN ag.accountCollection a WHERE a.id =:acc", Bank.class);
@@ -175,16 +196,18 @@ public class AppWindowController extends ControllerBase {
         TypedQuery<CountryCode> qCountryCode = em.createQuery("SELECT cc FROM CountryCode cc JOIN cc.accountCollection a WHERE a.id =:acc", CountryCode.class);
         TypedQuery<Account> qAccount = em.createQuery("SELECT a FROM Account a WHERE a.id =:acc", Account.class);
 
-        List<Bank> bankList = qBank.setParameter("acc", 1).getResultList();
+        this.flagAccount = this.listAccount.getSelectionModel().getSelectedItem().getId();
+        
+        List<Bank> bankList = qBank.setParameter("acc", this.flagAccount).getResultList();
         Bank bank = bankList.get(0);
 
-        List<Agency> agencyList = qAgency.setParameter("acc", 1).getResultList();
+        List<Agency> agencyList = qAgency.setParameter("acc", this.flagAccount).getResultList();
         Agency agency = agencyList.get(0);
 
-        List<Account> accountList = qAccount.setParameter("acc", 1).getResultList();
+        List<Account> accountList = qAccount.setParameter("acc", this.flagAccount).getResultList();
         Account account = accountList.get(0);
 
-        List<CountryCode> countryCodeList = qCountryCode.setParameter("acc", 1).getResultList();
+        List<CountryCode> countryCodeList = qCountryCode.setParameter("acc", this.flagAccount).getResultList();
         CountryCode countryCode = countryCodeList.get(0);
 
         em.close();
@@ -193,13 +216,16 @@ public class AppWindowController extends ControllerBase {
             FileWriter fw = new FileWriter("Rib.txt");
             String rib = RibIban.generateRib(agency, account, bank);
             String iban = RibIban.generateIban(agency, account, bank, countryCode);
-            String str = "--------------------------RIB-------------------------\n";
-            str += "Bank code  " + "  Agency code  " + "  Account number  " + "  Rib key\n";
-            str += "  " + rib.substring(0, 5) + "         " + rib.substring(5, 10) + "        " + rib.substring(10, rib.length() - 2) + "        " + rib.substring(rib.length() - 2, rib.length()) + "\n";
-            str += "\n---------------IBAN--------------\n";
+            String str = "--------------------------RIB-------------------------\r\n";
+            str += "Bank code  " + "  Agency code  " + "  Account number  " + "  Rib key\r\n";
+            str += "  " + rib.substring(0, 5) + "         " + rib.substring(5, 10) + "        " + rib.substring(10, rib.length() - 2) + "        " + rib.substring(rib.length() - 2, rib.length()) + "\r\n";
+            str += "\r\n---------------IBAN--------------\r\n";
             str += iban.substring(0, 4) + " " + iban.substring(4, 8) + " " + iban.substring(8, 12) + " " + iban.substring(12, 16) + " " + iban.substring(16, 20) + " " + iban.substring(20, 24) + " " + iban.substring(24, iban.length());
             fw.write(str);
             fw.close();
+            
+            ProcessBuilder pb = new ProcessBuilder("Notepad.exe", "Rib.txt");
+            pb.start();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -221,11 +247,17 @@ public class AppWindowController extends ControllerBase {
     @FXML
     private void handleMenuBudgetCategories(ActionEvent event) throws IOException {
         
-        ControllerBase controller = ControllerBase.loadFxml("BudgetCategoriesWindow_v3.fxml", this.mediator);
+        BudgetCategoriesWindowController_v3 controller = (BudgetCategoriesWindowController_v3) ControllerBase.loadFxml(
+                "BudgetCategoriesWindow_v3.fxml", 
+                this.mediator
+        );
+        controller.setFlagAccount(this.listAccount.getSelectionModel().getSelectedItem().getId());
+        controller.initBudgetCategoriesWindowController(this.mediator);
         Scene scene = new Scene(controller.getParent());
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
+        
     }
 
     @FXML
@@ -270,4 +302,6 @@ public class AppWindowController extends ControllerBase {
 
     private Mediator mediator = null;
     private EntityManagerFactory emf = null;
+    private int flagHolder, flagAccount;
 }
+   
