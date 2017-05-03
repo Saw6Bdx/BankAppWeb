@@ -56,6 +56,8 @@ public class NewAccountWindow_page3Controller extends NewAccountWindowController
         String accountManagerEmail = txtAccountManagerEmail.getText();
         Date accountManagerAssignementDate = LocalDate2Date(txtAccountManagerAssignementDate.getValue());
         
+        boolean flagNewBank = false;
+                    
         // Check the fields
         if (Valid.isValidOnlyLetters(accountManagerName)) {
             if (Valid.isValidOnlyLetters(accountManagerFirstName)) {
@@ -93,14 +95,12 @@ public class NewAccountWindow_page3Controller extends NewAccountWindowController
                             getBank().getName(), 
                             getBank().getBankCode()
                     );*/
-                    boolean flagNewBank = false;
                     if ( idBank(getBank().getName()) == 0 ) {
                         flagNewBank = true;
                     }
                     Bank bankBdd = new Bank(
                             idBank(getBank().getName()) == 0 ? null : idBank(getBank().getName()),
                             getBank().getName(),
-                            //bankCode(getBank().getName())
                             getBank().getBankCode()
                     );
 

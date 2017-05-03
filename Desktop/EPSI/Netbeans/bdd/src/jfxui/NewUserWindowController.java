@@ -21,6 +21,9 @@ import javax.persistence.Persistence;
 
 import db.home.bank.Holder;
 import db.home.bank.Postcode;
+import java.util.List;
+import javax.persistence.PersistenceException;
+import javax.persistence.TypedQuery;
 import utils.Valid;
 import utils.AlertMessage;
 import static utils.Password.get_SHA_512_SecurePassword;
@@ -69,12 +72,15 @@ public class NewUserWindowController extends ControllerBase {
         String pwd = txtPwd.getText();
         String pwdConfirm = txtConfirmPwd.getText();
         
+        boolean flagNewPostcode = false;
+        
         // Convert birthday date from dd/MM/yyyy to yyyy-MM-dd
+        Date d = new Date(0);
         if ( Valid.isValidDate(birthday) ) {
             birthday = convFormatDate(birthday);
             SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd");
             try {
-                Date d = dateParser.parse(birthday);
+                d = dateParser.parse(birthday);
             } catch (ParseException ex) {
             }
         }
@@ -95,7 +101,14 @@ public class NewUserWindowController extends ControllerBase {
                                     if (Valid.isValidPwd(pwd, pwdConfirm)) {
                             
                                         // All the fields are correct, then it is possible to create objects
-                                        Postcode postcode = new Postcode(null,Integer.parseInt(postCode),city);
+                                        if (idPostcode(Integer.parseInt(postCode)) == 0 ) {
+                                            flagNewPostcode = true;
+                                        }
+                                        Postcode postcode = new Postcode(
+                                                idPostcode(Integer.parseInt(postCode)) == 0 ? null : idPostcode(Integer.parseInt(postCode)),
+                                                Integer.parseInt(postCode),
+                                                city
+                                        );
                                         Address address = new Address(null,addLine1);
                                         Holder holder = new Holder(null,name,firstName,login,get_SHA_512_SecurePassword(pwd,"1"));
     
@@ -104,13 +117,16 @@ public class NewUserWindowController extends ControllerBase {
                                         EntityManager em = emf.createEntityManager();
 
                                         em.getTransaction().begin(); 
-                                        em.persist(postcode);
+                                        if (flagNewPostcode) {
+                                            em.persist(postcode);
+                                        }
                                         address.setIdPostcode(postcode);
                                         if (!addLine2.isEmpty()) {
                                             address.setLine2(addLine2);
                                         }    
                                         em.persist(address);
                                         holder.setPhone(phone);
+                                        holder.setBirthday(d);
                                         holder.setIdAddress(address);
                                         em.persist(holder);
                                         em.getTransaction().commit();
@@ -159,6 +175,27 @@ public class NewUserWindowController extends ControllerBase {
             AlertMessage.alertMessage("name","Only letters, hyphen and apostrophe allowed");
         }
         
+    }
+    
+    
+    public int idPostcode(int str) {
+        int id = 0;
+        try {
+            EntityManager em = getMediator().createEntityManager();
+            TypedQuery<Postcode> qBank = em.createNamedQuery("Postcode.findAll", Postcode.class);
+            List<Postcode> postcodeList = qBank.getResultList();
+            
+            for ( int i = 0 ; i < postcodeList.size() ; i++ ) {
+                if ( str == postcodeList.get(i).getPostcode() ) {
+                    id = postcodeList.get(i).getId();
+                }
+            }
+            
+            em.close();
+        } catch (PersistenceException e) {
+            
+        }
+        return id;
     }
     
     
