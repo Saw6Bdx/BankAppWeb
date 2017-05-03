@@ -114,6 +114,7 @@ public class NewAccountWindow_page1Controller extends NewAccountWindowController
                         controller.setAccount(accountObj);
                         controller.setAccountType(accountTypeObj);
                         controller.setCountryCode(countryCodeObj);
+                        controller.setFlagHolder(getFlagHolder());
                         Scene scene = new Scene(controller.getParent());
                         Stage stage = new Stage();
                         stage.setScene(scene);

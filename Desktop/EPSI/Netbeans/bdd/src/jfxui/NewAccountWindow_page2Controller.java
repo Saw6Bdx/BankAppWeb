@@ -166,6 +166,7 @@ public class NewAccountWindow_page2Controller extends NewAccountWindowController
                                 controller.setBank(bankObj);
                                 controller.setPostcode(postCodeObj);
                                 controller.setAgency(agencyObj);
+                                controller.setFlagHolder(getFlagHolder());
 
                                 Scene scene = new Scene(controller.getParent());
                                 Stage stage = new Stage();
