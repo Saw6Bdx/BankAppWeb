@@ -100,8 +100,8 @@ public class NewAccountWindowController extends ControllerBase {
             List<AccountType> accountTypeList = qAccountType.getResultList();
             
             for ( int i = 0 ; i < accountTypeList.size() ; i++ ) {
-                if ( str.equals(accountTypeList.get(id).getType()) ) {
-                    id = i;
+                if ( str.equals(accountTypeList.get(i).getType()) ) {
+                    id = accountTypeList.get(i).getId();
                 }
             }
             
@@ -114,15 +114,15 @@ public class NewAccountWindowController extends ControllerBase {
     
     
     public int idCountryCode(String str) {
-        int id = 1;
+        int id = 0;
         try {
             EntityManager em = getMediator().createEntityManager();
             TypedQuery<CountryCode> qCountryCode = em.createNamedQuery("CountryCode.findAll", CountryCode.class);
             List<CountryCode> countryCodeList = qCountryCode.getResultList();
             
             for ( int i = 0 ; i < countryCodeList.size() ; i++ ) {
-                if ( str.equals(countryCodeList.get(id).getCode()) ) {
-                    id = i;
+                if ( str.equals(countryCodeList.get(i).getCode()) ) {
+                    id = countryCodeList.get(i).getId();
                 }
             }
             
@@ -142,8 +142,8 @@ public class NewAccountWindowController extends ControllerBase {
             List<Bank> bankList = qBank.getResultList();
             
             for ( int i = 0 ; i < bankList.size() ; i++ ) {
-                if ( str.equals(bankList.get(id).getName()) ) {
-                    id = i;
+                if ( str.equals(bankList.get(i).getName()) ) {
+                    id = bankList.get(i).getId();
                 }
             }
             

@@ -88,16 +88,21 @@ public class NewAccountWindow_page3Controller extends NewAccountWindowController
                     // ... table BANK
                     /* On peut supprimer le choix du code banque qui est forcèment 
                     lié au nom de la banque */
-                    Bank bankBdd = new Bank(
+                    /*Bank bankBdd = new Bank(
                             null, 
                             getBank().getName(), 
                             getBank().getBankCode()
-                    );
-                    /*Bank bankBdd = new Bank(
+                    );*/
+                    boolean flagNewBank = false;
+                    if ( idBank(getBank().getName()) == 0 ) {
+                        flagNewBank = true;
+                    }
+                    Bank bankBdd = new Bank(
                             idBank(getBank().getName()) == 0 ? null : idBank(getBank().getName()),
                             getBank().getName(),
-                            bankCode(getBank().getName())
-                    );*/
+                            //bankCode(getBank().getName())
+                            getBank().getBankCode()
+                    );
 
                     // ... table AGENCY
                     Agency agencyBdd = new Agency(
@@ -176,7 +181,9 @@ public class NewAccountWindow_page3Controller extends NewAccountWindowController
                     em.getTransaction().begin();
                     em.persist(postcodeBdd);
                     em.persist(addressBdd);
-                    em.persist(bankBdd);
+                    if (flagNewBank) {
+                        em.persist(bankBdd);
+                    }
                     em.persist(agencyBdd);
                     em.persist(accountBdd);
                     em.persist(accountManagerBdd);
