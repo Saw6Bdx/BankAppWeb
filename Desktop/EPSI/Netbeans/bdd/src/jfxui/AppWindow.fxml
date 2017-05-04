@@ -45,7 +45,7 @@
                 <Menu mnemonicParsing="false" text="My transactions">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#handleMenuEditNewTransaction" text="New transaction..." />
-                    <MenuItem mnemonicParsing="false" text="Delete transaction" />
+                    <MenuItem mnemonicParsing="false" onAction="#handleMenuDeleteTransaction" text="Delete transaction" />
                   </items>
                 </Menu>
                   <Menu mnemonicParsing="false" text="My budget">

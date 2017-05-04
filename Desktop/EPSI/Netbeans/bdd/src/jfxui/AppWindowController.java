@@ -258,6 +258,19 @@ public class AppWindowController extends ControllerBase {
         stage.setScene(scene);
         stage.show();
     }
+    
+    @FXML
+    private void handleMenuDeleteTransaction(ActionEvent event) throws IOException {
+        
+        DeleteTransactionsWindowController controller = (DeleteTransactionsWindowController) ControllerBase.loadFxml("DeleteTransactionsWindow.fxml", this.mediator);
+        controller.setFlagHolder(this.flagHolder);
+        controller.initDeleteAccountWindow();
+        Scene scene = new Scene(controller.getParent());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+        
+    }
 
     @FXML
     private void handleMenuBudgetCategories(ActionEvent event) throws IOException {
