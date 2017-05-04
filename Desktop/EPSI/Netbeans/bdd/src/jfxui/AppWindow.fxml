@@ -32,7 +32,7 @@
                 <Menu mnemonicParsing="false" text="Edit/Manage">
                   <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleMenuEditNewAccount" text="New account..." />
-                        <MenuItem mnemonicParsing="false" text="Delete account" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuDeleteAccount" text="Delete account" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#handleMenuModifyAccountManager" text="Modify account manager..." />
                         <MenuItem mnemonicParsing="false" onAction="#handleMenuDeleteAccountManager" text="Delete account manager..." />

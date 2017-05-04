@@ -158,7 +158,22 @@ public class AppWindowController extends ControllerBase {
         // New "account" button in the AppWindow
         // TO BE IMPLEMENTED ...
     }
+    
+    
+    @FXML
+    private void handleMenuDeleteAccount(ActionEvent event) throws IOException {
+        
+        DeleteAccountWindowController controller = (DeleteAccountWindowController) ControllerBase.loadFxml("DeleteAccountWindow.fxml", this.mediator);
+        controller.setFlagHolder(this.flagHolder);
+        controller.initDeleteAccountWindow();
+        Scene scene = new Scene(controller.getParent());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+        
+    }
 
+    
     @FXML
     private void handleMenuModifyAccountManager(ActionEvent event) throws IOException {
         
