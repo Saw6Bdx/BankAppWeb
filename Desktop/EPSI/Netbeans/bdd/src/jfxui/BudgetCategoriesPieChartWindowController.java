@@ -98,40 +98,26 @@ public class BudgetCategoriesPieChartWindowController extends ControllerBase {
         }
 
         // Setting percentage into the window
-        Collection<PieChart.Data> collPieChart = null;
-        for (int i = 0; i < nbCategories; i++) {
-
-            categories = categoryList.get(i);
-            System.out.println(categories.getLabel());
-            System.out.println(percentage[i]);
-            //categories.getLabel(), 10));
-            //new PieChart.Data(categories.getLabel(), tabSumCategory[i]));
-            collPieChart.add(new PieChart.Data("coucou",10));
-
+        int i = 0;
+        while (percentage[i] == 0.0) {
+            i++;
+        }
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+            new PieChart.Data(categoryList.get(i).getLabel(), percentage[i]));
+        
+        for (int j = i+1; j < nbCategories; j++) {
+            categories = categoryList.get(j);
+            if (percentage[j] != 0) {
+                PieChart.Data pcd = new PieChart.Data(categories.getLabel(), percentage[j]);
+                pieChartData.add(pcd);
             }
+        }
         
-        ObservableList<PieChart.Data> pieChartData;
-        pieChartData = FXCollections.observableArrayList(collPieChart);
         this.pieChart.setData(pieChartData);
-        
-        /*this.labelTotal.setText(new Double(round(sum, 2)).toString() + " " + this.currency);
-        this.labelAmount.setText(tabSumCategory[idCategory - 1] + " " + this.currency);
-        this.labelPercentage.setText(percentage[idCategory - 1] + " %");*/
+        this.pieChart.setTitle("Imported Fruits");
         
         em.close();
         
-        /*ObservableList<PieChart.Data> pieChartData =
-                FXCollections.observableArrayList(
-                new PieChart.Data("Grapefruit", 13),
-                new PieChart.Data("Oranges", 25),
-                new PieChart.Data("Plums", 10),
-                new PieChart.Data("Pears", 22),
-                new PieChart.Data("Apples", 30)
-                );
-        
-        this.pieChart.setTitle("Imported Fruits");
-        this.pieChart.setData(pieChartData);*/
-
     }
     
     private double round(double A, int B) {

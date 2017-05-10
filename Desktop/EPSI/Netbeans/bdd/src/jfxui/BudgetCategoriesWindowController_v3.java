@@ -13,9 +13,11 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
@@ -141,6 +143,21 @@ public class BudgetCategoriesWindowController_v3 extends ControllerBase {
         this.labelPercentage.setText(percentage[idCategory - 1] + " %");
         
         em.close();
+    }
+    
+    @FXML
+    private void handleButtonDisplay(ActionEvent event) throws IOException {
+        BudgetCategoriesPieChartWindowController controller = (BudgetCategoriesPieChartWindowController) ControllerBase.loadFxml(
+                "BudgetCategoriesPieChartWindow.fxml",
+                getMediator()
+        );
+        
+        controller.setFlagAccount(this.flagIdAccount);
+        controller.initBudgetCategoriesWindowController(getMediator());
+        Scene scene = new Scene(controller.getParent());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
