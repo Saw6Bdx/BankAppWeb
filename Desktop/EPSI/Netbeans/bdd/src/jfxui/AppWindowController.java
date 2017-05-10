@@ -266,7 +266,12 @@ public class AppWindowController extends ControllerBase {
     @FXML
     private void handleMenuEditNewTransaction(ActionEvent event) throws IOException {
 
-        ControllerBase controller = ControllerBase.loadFxml("NewTransactionsWindow.fxml", this.mediator);
+        NewTransactionsWindowController controller = (NewTransactionsWindowController) ControllerBase.loadFxml(
+                "NewTransactionsWindow.fxml", 
+                this.mediator
+        );
+        controller.setFlagHolder(flagHolder);
+        controller.initNewTransactionsWindow();
         Scene scene = new Scene(controller.getParent());
         Stage stage = new Stage();
         stage.setScene(scene);

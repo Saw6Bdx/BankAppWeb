@@ -53,6 +53,12 @@ public class NewTransactionsWindowController extends ControllerBase {
     private Button btnApply;
     @FXML
     private Button btnCancel;
+    
+    private int flagHolder;
+    
+    public void setFlagHolder(int flagHolder) {
+        this.flagHolder = flagHolder;
+    }
 
     public Account getAccount() {
         return this.account;
@@ -82,12 +88,13 @@ public class NewTransactionsWindowController extends ControllerBase {
         int id = 0;
         try {
             EntityManager em = getMediator().createEntityManager();
-            TypedQuery<Account> qAccount = em.createNamedQuery("Account.findAll", Account.class);
+            TypedQuery<Account> qAccount = em.createQuery("SELECT a FROM Account a JOIN a.holderCollection h WHERE h.id=:pid", Account.class);
+            qAccount.setParameter("pid", this.flagHolder);
             List<Account> accountList = qAccount.getResultList();
 
             for (int i = 0; i < accountList.size(); i++) {
                 if (str.equals(accountList.get(i).getNumber())) {
-                    id = i;
+                    id = accountList.get(i).getId();
                 }
             }
 
@@ -95,16 +102,7 @@ public class NewTransactionsWindowController extends ControllerBase {
         } catch (PersistenceException e) {
 
         }
-        return id + 1;
-        /*switch (str) {
-            case "1324350971":
-                id = 1;
-                break;
-            case "1EGR693CZ20":
-                id = 2;
-                break;
-        }
-        return id;*/
+        return id;
     }
 
     public int idTransactionType(String str) {
@@ -116,7 +114,7 @@ public class NewTransactionsWindowController extends ControllerBase {
 
             for (int i = 0; i < transactionTypeList.size(); i++) {
                 if (str.equals(transactionTypeList.get(i).getType())) {
-                    id = i;
+                    id = transactionTypeList.get(i).getId();;
                 }
             }
 
@@ -124,25 +122,7 @@ public class NewTransactionsWindowController extends ControllerBase {
         } catch (PersistenceException e) {
 
         }
-        return id + 1;
-        /*switch (str) {
-            case "Transfer":
-                id = 1;
-                break;
-            case "Check":
-                id = 2;
-                break;
-            case "Withdrawal":
-                id = 3;
-                break;
-            case "CC payment":
-                id = 4;
-                break;
-            case "Bank's order":
-                id = 5;
-                break;
-        }
-        return id;*/
+        return id;
     }
 
     public int idCategory(String str) {
@@ -165,62 +145,22 @@ public class NewTransactionsWindowController extends ControllerBase {
 
         }
         return id;
-        /*        int id = 0;
-        switch (str) {
-            case "Transportation":
-                id = 1;
-                break;
-            case "Everyday life":
-                id = 2;
-                break;
-            case "Supermarket":
-                id = 3;
-                break;
-            case "Withdrawal":
-                id = 4;
-                break;
-            case "Dressing":
-                id = 5;
-                break;
-            case "Health":
-                id = 6;
-                break;
-            case "Accomodation":
-                id = 7;
-                break;
-            case "Rent":
-                id = 8;
-                break;
-            case "Electricity / water / gas":
-                id = 9;
-                break;
-            case "Furniture":
-                id = 10;
-                break;
-            case "Maintenance":
-                id = 11;
-                break;
-            case "Hobbies":
-                id = 12;
-                break;
-            case "Professional":
-                id = 13;
-                break;
-            case "Saving":
-                id = 14;
-                break;
-        }*/
-
     }
 
     @Override
     public void initialize(Mediator mediator) {
+    }
+    
+    public void initNewTransactionsWindow() {
         try {
-            EntityManager em = mediator.createEntityManager();
+            EntityManager em = getMediator().createEntityManager();
             List<Category> categories = em.createNamedQuery("Category.findAll", Category.class).getResultList();
 
             try {
-                List<Account> accounts = em.createNamedQuery("Account.findAll", Account.class).getResultList();
+                TypedQuery<Account> qAccount = em.createQuery("SELECT a FROM Account a JOIN a.holderCollection h WHERE h.id=:pid", Account.class);
+                qAccount.setParameter("pid", this.flagHolder);
+                List<Account> accounts = qAccount.getResultList();
+                
                 this.choiceAccount.setItems(FXCollections.observableList(accounts));
             } catch (PersistenceException e) {
                 this.btnCancel.setDisable(true);
@@ -274,6 +214,7 @@ public class NewTransactionsWindowController extends ControllerBase {
                         // Saving informations ... 
                         // ... table TRANSACTIONS
                         Transactions TransactionsBdd = new Transactions();
+                        
                         TransactionsBdd.setDate(transactionsCreationDate);
                         TransactionsBdd.setAmount(Double.parseDouble(transactionsAmount));
                         TransactionsBdd.setLabel(transactionsLabel);
@@ -283,21 +224,30 @@ public class NewTransactionsWindowController extends ControllerBase {
                         TransactionType transactionTypeBdd = new TransactionType(
                                 idTransactionType(transactionsType.getType()) == 0 ? null : idTransactionType(transactionsType.getType())
                         );
+                        transactionTypeBdd.setType(transactionsType.getType());
 
                         // ... table CATEGORY
                         Category CategoryBdd = new Category(
                                 idCategory(transactionsCategory.getLabel()) == 0 ? null : idCategory(transactionsCategory.getLabel())
                         );
+                        CategoryBdd.setLabel(transactionsCategory.getLabel());
 
                         // ... table ACCOUNT
                         Account AccountBdd = new Account(
                                 idAccount(transactionsAccount.getNumber()) == 0 ? null : idAccount(transactionsAccount.getNumber())
                         );
+                        AccountBdd.setNumber(transactionsAccount.getNumber());
+                        AccountBdd.setCreationDate(transactionsAccount.getCreationDate());
+                        AccountBdd.setFirstBalance(transactionsAccount.getFirstBalance());
+                        AccountBdd.setOverdraft(transactionsAccount.getOverdraft());
+                        AccountBdd.setIdAccountType(transactionsAccount.getIdAccountType());
+                        AccountBdd.setIdCountryCode(transactionsAccount.getIdCountryCode());
+                        AccountBdd.setIdAgency(transactionsAccount.getIdAgency());
 
                         TransactionsBdd.setIdTransactionType(transactionTypeBdd);
                         TransactionsBdd.setIdAccount(AccountBdd);
                         TransactionsBdd.setIdCategory(CategoryBdd);
-
+                      
                         EntityManager em = getMediator().createEntityManager();
 
                         em.getTransaction().begin();
