@@ -58,6 +58,14 @@ public class Recipient implements Serializable {
         this.id = id;
         this.name = name;
     }
+    
+    public Recipient(Integer id, String name, String iban) {
+        Check.checkIsEmpty(name, "name");
+        Check.checkIsEmpty(iban, "iban");
+        this.id = id;
+        this.name = name;
+        this.iban = iban;
+    }
 
     public Integer getId() {
         return this.id;

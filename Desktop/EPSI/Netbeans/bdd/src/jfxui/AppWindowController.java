@@ -54,6 +54,7 @@ public class AppWindowController extends ControllerBase {
     
     public void initAppWindowController(Mediator mediator) {
         this.mediator = mediator;
+
         try {
             EntityManager em = mediator.createEntityManager();
             TypedQuery<Holder> qHolder = em.createQuery("SELECT h FROM Holder h WHERE h.id =:holder", Holder.class);
@@ -122,7 +123,12 @@ public class AppWindowController extends ControllerBase {
     @FXML
     private void handleMenuModifyUserProfile(ActionEvent event) throws IOException {
         
-        ControllerBase controller = ControllerBase.loadFxml("ModifyUserWindow.fxml", this.mediator);
+        ModifyUserWindowController controller = (ModifyUserWindowController) ControllerBase.loadFxml(
+                "ModifyUserWindow.fxml", 
+                this.mediator
+        );
+        controller.setFlagHolder(this.flagHolder);
+        controller.initModifyUserProfileWindow();
         Scene scene = new Scene(controller.getParent());
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -154,6 +160,8 @@ public class AppWindowController extends ControllerBase {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
+        
+        this.root.getScene().getWindow().hide();
         
         // New "account" button in the AppWindow
         // TO BE IMPLEMENTED ...
@@ -187,7 +195,13 @@ public class AppWindowController extends ControllerBase {
     @FXML
     private void handleMenuDeleteAccountManager(ActionEvent event) throws IOException {
         
-        ControllerBase controller = ControllerBase.loadFxml("DeleteAccountManagerWindow.fxml", this.mediator);
+        //ControllerBase controller = ControllerBase.loadFxml("DeleteAccountManagerWindow.fxml", this.mediator);
+        DeleteAccountManagerWindowController controller = (DeleteAccountManagerWindowController) ControllerBase.loadFxml(
+                "DeleteAccountManagerWindow.fxml", 
+                this.mediator
+        );
+        controller.setFlagHolder(this.flagHolder);
+        controller.initDeleteAccountManagerWindow();
         Scene scene = new Scene(controller.getParent());
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -269,8 +283,33 @@ public class AppWindowController extends ControllerBase {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
-        
     }
+    
+    @FXML
+     private void handleMenuEditNewRecipient(ActionEvent event) throws IOException {
+ 
+         ControllerBase controller = ControllerBase.loadFxml(
+                 "NewRecipientWindow.fxml", 
+                 this.mediator
+         );
+         Scene scene = new Scene(controller.getParent());
+         Stage stage = new Stage();
+         stage.setScene(scene);
+         stage.show();
+      }
+ 
+     @FXML
+     private void handleMenuEditDeleteRecipient(ActionEvent event) throws IOException {
+         
+         ControllerBase controller = ControllerBase.loadFxml(
+                 "DeleteRecipientWindow.fxml", 
+                 this.mediator
+         );
+         Scene scene = new Scene(controller.getParent());
+         Stage stage = new Stage();
+         stage.setScene(scene);
+         stage.show();
+      }
 
     @FXML
     private void handleMenuBudgetCategories(ActionEvent event) throws IOException {
