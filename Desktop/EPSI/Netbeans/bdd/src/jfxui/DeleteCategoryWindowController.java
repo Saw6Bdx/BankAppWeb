@@ -20,14 +20,17 @@ import javax.persistence.PersistenceException;
 import utils.AlertMessage;
 
 /**
- * Comment faire si on supprime une catégorie qui était affectée à une transaction ?
+ * Class which allowed the user to delete one category. It selects in the
+ * categories that the user has created.
+ *
  * @author Mary
  */
 public class DeleteCategoryWindowController extends ControllerBase {
 
     @FXML
     private ChoiceBox<Category> setCategoriesName;
-    @FXML private Label setMsgOptional;
+    @FXML
+    private Label setMsgOptional;
     @FXML
     private Button btnCancel;
     @FXML
@@ -40,14 +43,14 @@ public class DeleteCategoryWindowController extends ControllerBase {
             // Loading categories field (id > 14 because with the app there are 14 categories available that cannot be deleted)
             EntityManager em = getMediator().createEntityManager();
             List<Category> categoryList = em.createQuery("SELECT c FROM Category c WHERE c.id > 14").getResultList();
-            
+
             this.setCategoriesName.setItems(FXCollections.observableArrayList(categoryList));
             em.close();
 
             if (categoryList.size() == 0) {
                 this.setMsgOptional.setText("No category available to be deleted");
                 this.btnOK.setDisable(true);
-            } 
+            }
 
         } catch (PersistenceException e) {
             this.btnOK.setDisable(true);
@@ -59,17 +62,23 @@ public class DeleteCategoryWindowController extends ControllerBase {
     @FXML
     private void handleBtnOK(ActionEvent event) throws IOException {
 
-        Category category = setCategoriesName.getValue();
+        Category category = this.setCategoriesName.getValue();
 
-        EntityManager em = getMediator().createEntityManager();
+        try {
+            EntityManager em = getMediator().createEntityManager();
 
-        Category cat = em.find(Category.class, category.getId());
-        em.getTransaction().begin();
-        em.remove(cat);
-        em.getTransaction().commit();
+            Category cat = em.find(Category.class, category.getId());
+            em.getTransaction().begin();
+            em.remove(cat);
+            em.getTransaction().commit();
+
+            em.close();
+        } catch (PersistenceException e) {
+            AlertMessage.processPersistenceException(e);
+        }
 
         //Close current window
-        Stage current = (Stage) btnOK.getScene().getWindow();
+        Stage current = (Stage) this.btnOK.getScene().getWindow();
         current.close();
 
     }
@@ -78,7 +87,7 @@ public class DeleteCategoryWindowController extends ControllerBase {
     private void handleBtnCancel(ActionEvent event) throws IOException {
 
         //Close current window
-        Stage current = (Stage) btnCancel.getScene().getWindow();
+        Stage current = (Stage) this.btnCancel.getScene().getWindow();
         current.close();
 
     }

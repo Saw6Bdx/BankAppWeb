@@ -24,8 +24,9 @@ import javax.persistence.TypedQuery;
 import utils.AlertMessage;
 
 /**
- * Class to see the amount and percentage by category. The category wanted to
- * be seen is selected by a ChoiceBox.
+ * Class to see the amount and percentage by category. The category wanted to be
+ * seen is selected by a ChoiceBox.
+ *
  * @author Mary
  */
 public class BudgetCategoriesWindowController_v3 extends ControllerBase {
@@ -46,14 +47,15 @@ public class BudgetCategoriesWindowController_v3 extends ControllerBase {
     public void initialize(Mediator mediator) {
 
     }
-    
+
     /**
-     * Method which get the category of the database and initialize the 
-     * category ChoiceBox.
-     * @param mediator 
+     * Method which get the category of the database and initialize the category
+     * ChoiceBox.
+     *
+     * @param mediator
      */
-    public void initBudgetCategoriesWindowController(Mediator mediator){
-        
+    public void initBudgetCategoriesWindowController(Mediator mediator) {
+
         try {
             EntityManager em = mediator.createEntityManager();
             // Getting all the categories available
@@ -67,19 +69,22 @@ public class BudgetCategoriesWindowController_v3 extends ControllerBase {
             this.btnOK.setDisable(true);
             AlertMessage.processPersistenceException(e);
         }
-        
+
     }
-    
+
     /**
-     * Method which assigns the flagIdAccount under mouse_clicked in AppWindow to this.flagAccount
+     * Method which assigns the flagIdAccount under mouse_clicked in AppWindow
+     * to this.flagAccount
+     *
      * @param flagAccount id under mouse_clicked
      */
     public void setFlagAccount(int flagIdAccount) {
         this.flagIdAccount = flagIdAccount;
     }
-    
+
     /**
      * Method which calculate the round value of a double
+     *
      * @param A, double to be rounded
      * @param B, precision (number after the coma)
      * @return rounded value
@@ -91,74 +96,78 @@ public class BudgetCategoriesWindowController_v3 extends ControllerBase {
     @FXML
     private void handleChoiceBoxCategory(ActionEvent event) throws IOException {
 
-        Category category = setCategoryList.getValue();
+        Category category = this.setCategoryList.getValue();
         int idCategory = category.getId();
 
-        EntityManager em = getMediator().createEntityManager();
+        try {
+            EntityManager em = getMediator().createEntityManager();
 
-        // Getting all the categories available
-        TypedQuery<Category> qCategory = em.createQuery("SELECT a FROM Category a", Category.class);
-        this.categoryList = qCategory.getResultList();
-        
-        // Getting all the transactions, and its sum, according to one account
-        TypedQuery<Transactions> qTransactions = em.createQuery("SELECT b FROM Transactions b WHERE b.idAccount.id=:pacc", Transactions.class);
-        qTransactions.setParameter("pacc", this.flagIdAccount);
-        List<Transactions> transactionsList = qTransactions.getResultList();
+            // Getting all the categories available
+            TypedQuery<Category> qCategory = em.createQuery("SELECT a FROM Category a", Category.class);
+            this.categoryList = qCategory.getResultList();
 
-        // Variables setting
-        int nbCategories = this.categoryList.size();
-        int nbTransactions = transactionsList.size();
-        double tabSumCategory[] = new double[nbCategories + 1]; // +1 because some transactions can have no categories
-        for (int i = 0; i < nbCategories; i++) { // initialization table
-            tabSumCategory[i] = 0.0;
-        }
+            // Getting all the transactions, and its sum, according to one account
+            TypedQuery<Transactions> qTransactions = em.createQuery("SELECT b FROM Transactions b WHERE b.idAccount.id=:pacc", Transactions.class);
+            qTransactions.setParameter("pacc", this.flagIdAccount);
+            List<Transactions> transactionsList = qTransactions.getResultList();
 
-        // Getting the amount of transactions by categories
-        Transactions transactions = new Transactions();
-        //Category 
-        Category categories = new Category();
-        double sum = 0.0, sumCat = 0.0;
-        for (int j = 0; j < nbTransactions; j++) {
+            // Variables setting
+            int nbCategories = this.categoryList.size();
+            int nbTransactions = transactionsList.size();
+            double tabSumCategory[] = new double[nbCategories + 1]; // +1 because some transactions can have no categories
+            for (int i = 0; i < nbCategories; i++) { // initialization table
+                tabSumCategory[i] = 0.0;
+            }
 
-            transactions = transactionsList.get(j);
-            sum += transactions.getAmount();
+            // Getting the amount of transactions by categories
+            Transactions transactions = new Transactions();
+            //Category 
+            Category categories = new Category();
+            double sum = 0.0, sumCat = 0.0;
+            for (int j = 0; j < nbTransactions; j++) {
 
-            for (int i = 0; i < nbCategories; i++) {
+                transactions = transactionsList.get(j);
+                sum += transactions.getAmount();
 
-                categories = this.categoryList.get(i);
+                for (int i = 0; i < nbCategories; i++) {
 
-                // Checking if the category is identical
-                if (categories.equals(transactions.getIdCategory())) {
-                    tabSumCategory[i] += transactions.getAmount();
-                    sumCat += transactions.getAmount();
+                    categories = this.categoryList.get(i);
+
+                    // Checking if the category is identical
+                    if (categories.equals(transactions.getIdCategory())) {
+                        tabSumCategory[i] += transactions.getAmount();
+                        sumCat += transactions.getAmount();
+                    }
                 }
             }
+
+            tabSumCategory[nbCategories] = sum - sumCat;
+
+            // Percentages
+            this.percentage = new double[nbCategories + 1];
+            for (int i = 0; i < nbCategories + 1; i++) {
+                this.percentage[i] = round(tabSumCategory[i] / sum * 100, 2);
+                tabSumCategory[i] = round(tabSumCategory[i], 2);
+            }
+
+            // Setting percentage into the window
+            this.labelTotal.setText(new Double(round(sum, 2)).toString() + " " + this.currency);
+            this.labelAmount.setText(tabSumCategory[idCategory - 1] + " " + this.currency);
+            this.labelPercentage.setText(this.percentage[idCategory - 1] + " %");
+
+            em.close();
+        } catch (PersistenceException e) {
+            AlertMessage.processPersistenceException(e);
         }
-
-        tabSumCategory[nbCategories] = sum - sumCat;
-
-        // Percentages
-        this.percentage = new double[nbCategories + 1];
-        for (int i = 0; i < nbCategories + 1; i++) {
-            this.percentage[i] = round(tabSumCategory[i] / sum * 100, 2);
-            tabSumCategory[i] = round(tabSumCategory[i], 2);
-        }
-
-        // Setting percentage into the window
-        this.labelTotal.setText(new Double(round(sum, 2)).toString() + " " + this.currency);
-        this.labelAmount.setText(tabSumCategory[idCategory - 1] + " " + this.currency);
-        this.labelPercentage.setText(this.percentage[idCategory - 1] + " %");
-        
-        em.close();
     }
-    
+
     @FXML
     private void handleButtonDisplay(ActionEvent event) throws IOException {
         BudgetCategoriesPieChartWindowController controller = (BudgetCategoriesPieChartWindowController) ControllerBase.loadFxml(
                 "BudgetCategoriesPieChartWindow.fxml",
                 getMediator()
         );
-        
+
         controller.setPercentage(this.percentage);
         controller.setCategoryList(this.categoryList);
         controller.initBudgetCategoriesWindowController(getMediator());

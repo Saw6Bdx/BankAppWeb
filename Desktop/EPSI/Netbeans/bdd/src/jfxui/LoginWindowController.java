@@ -16,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import static utils.Password.get_SHA_512_SecurePassword;
 
 public class LoginWindowController extends ControllerBase{   
     @FXML private TextField labelLogin;
@@ -42,7 +43,8 @@ public class LoginWindowController extends ControllerBase{
             List<Holder> holderList = qHolder.setParameter("login", this.login).getResultList();
             String passwordHolder = holderList.get(0).getPassword();
             // Login existe, vérifier si le mot de passe correspond au même holder dans la base
-            if(this.password.equals(passwordHolder)) {
+            if (get_SHA_512_SecurePassword(this.password,"1").equals(passwordHolder)) {
+            //if(this.password.equals(passwordHolder)) {
                 AppWindowController controller = (AppWindowController)ControllerBase.loadFxml("AppWindow.fxml", this.mediator);
                 controller.setFlagHolder(holderList.get(0).getId());
                 controller.initAppWindowController(mediator);

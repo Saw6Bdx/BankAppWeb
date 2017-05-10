@@ -26,10 +26,12 @@ import utils.AlertMessage;
 import utils.Valid;
 
 /**
+ * Class which allowed the user to create a new account, page 2 of the form.
+ * This herits from NewAccountWindowController
  *
  * @author Mary
  */
-public class NewAccountWindow_page2Controller extends NewAccountWindowController {//ControllerBase {
+public class NewAccountWindow_page2Controller extends NewAccountWindowController {
 
     @FXML
     private TextField txtAgencyName;
@@ -55,12 +57,12 @@ public class NewAccountWindow_page2Controller extends NewAccountWindowController
     private Button btnPrevious;
     @FXML
     private Button btnNext;
-    
+
     private boolean flagSetBankName;
 
     @Override
     public void initialize(Mediator mediator) {
-        
+
         this.flagSetBankName = true;
         this.setBankName.setDisable(this.flagSetBankName);
 
@@ -81,30 +83,29 @@ public class NewAccountWindow_page2Controller extends NewAccountWindowController
         this.flagSetBankName = (this.flagSetBankName == true ? false : true);
         this.setBankName.setDisable(this.flagSetBankName);
     }
-    
+
     @FXML
     private void handleBtnNext(ActionEvent event) throws IOException {
 
-        String agencyName = txtAgencyName.getText();
-        String agencyCode = txtAgencyCode.getText();
+        String agencyName = this.txtAgencyName.getText();
+        String agencyCode = this.txtAgencyCode.getText();
         String bankName_set = "";
         Bank bankName_choice = new Bank();
         if (this.checkValue.isSelected()) {
             bankName_set = this.setBankName.getText();
+        } else {
+            bankName_choice = this.txtBankName.getValue();
         }
-        else {
-            bankName_choice = txtBankName.getValue();
-        }
-        String bankCode = txtBankCode.getText();
-        String agencyAddressLine1 = txtAgencyAddressLine1.getText();
-        String agencyAddressLine2 = txtAgencyAddressLine2.getText();
-        String agencyPostCode = txtAgencyPostCode.getText();
-        String agencyCity = txtAgencyCity.getText();
+        String bankCode = this.txtBankCode.getText();
+        String agencyAddressLine1 = this.txtAgencyAddressLine1.getText();
+        String agencyAddressLine2 = this.txtAgencyAddressLine2.getText();
+        String agencyPostCode = this.txtAgencyPostCode.getText();
+        String agencyCity = this.txtAgencyCity.getText();
 
         // Check the fields
-        if (Valid.isValidOnlyLetters(agencyName)) { // que des lettres + hyphen + apostrophe
-            if (Valid.isValidOnlyNumber(agencyCode) && agencyCode.length() == 5) { // que des chiffres et 5 caractères
-                if (Valid.isValidOnlyNumber(bankCode)) { // que des chiffres 
+        if (Valid.isValidOnlyLetters(agencyName)) { // only lettres + hyphen + apostrophe
+            if (Valid.isValidOnlyNumber(agencyCode) && agencyCode.length() == 5) {
+                if (Valid.isValidOnlyNumber(bankCode)) {
                     if (Valid.isValidAddress(agencyAddressLine1)) {
                         if (Valid.isValidPostCode(agencyPostCode)) {
                             if (Valid.isValidOnlyLetters(agencyCity)) {
@@ -120,8 +121,7 @@ public class NewAccountWindow_page2Controller extends NewAccountWindowController
                                 bankObj.setBankCode(bankCode);
                                 if (this.checkValue.isSelected()) {
                                     bankObj.setName(bankName_set);
-                                }
-                                else {
+                                } else {
                                     bankObj.setName(bankName_choice.toString());
                                 }
 
@@ -174,7 +174,7 @@ public class NewAccountWindow_page2Controller extends NewAccountWindowController
                                 stage.show();
 
                                 //Close current window
-                                Stage current = (Stage) btnNext.getScene().getWindow();
+                                Stage current = (Stage) this.btnNext.getScene().getWindow();
                                 current.close();
 
                             } else {
@@ -209,7 +209,7 @@ public class NewAccountWindow_page2Controller extends NewAccountWindowController
         stage.show();
 
         //Close current window
-        Stage current = (Stage) btnPrevious.getScene().getWindow();
+        Stage current = (Stage) this.btnPrevious.getScene().getWindow();
         current.close();
 
     }

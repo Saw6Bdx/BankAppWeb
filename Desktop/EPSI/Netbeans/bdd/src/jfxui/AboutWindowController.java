@@ -28,7 +28,7 @@ public class AboutWindowController extends ControllerBase {
     private void handleBtnOK(ActionEvent event) throws IOException {
 
         //Close current window
-        Stage current = (Stage)btnOK.getScene().getWindow();
+        Stage current = (Stage)this.btnOK.getScene().getWindow();
         current.close();
         
     }

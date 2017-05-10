@@ -20,6 +20,8 @@ import javax.persistence.TypedQuery;
 import utils.AlertMessage;
 
 /**
+ * Class which allowed the user to add a new category. 
+ * It writes into the database the category created.
  *
  * @author Mary
  */
@@ -94,6 +96,7 @@ public class NewCategoryWindowController extends ControllerBase {
             EntityManager em = getMediator().createEntityManager();
             TypedQuery<Category> qCategory = em.createNamedQuery("Category.findAll", Category.class);
             List<Category> categoryList = qCategory.getResultList();
+            em.close();
             // Set categories name
             this.setCategoriesName.setItems(FXCollections.observableArrayList(categoryList));
 
@@ -104,11 +107,12 @@ public class NewCategoryWindowController extends ControllerBase {
 
     }
 
-    @FXML
+    
     /**
      * When the user clicks on the Cancel button, the application goes back to
      * the Login Window and closes the New User Window.
      */
+    @FXML
     private void handleBtnCancel(ActionEvent event) throws IOException {
 
         closeCurrentWindow(btnCancel);

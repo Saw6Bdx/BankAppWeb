@@ -13,7 +13,10 @@ import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
 /**
- *  
+ * Class which allowed the user to create a new account.
+ * This is the superclass that registered all the informations needed at the end
+ * of the form.
+ *
  * @author Mary
  */
 public class NewAccountWindowController extends ControllerBase {
@@ -89,7 +92,11 @@ public class NewAccountWindowController extends ControllerBase {
         this.agency = agency;
     }
     
-    
+    /**
+     * Method which find the id associated to the account type.
+     * @param str, the account type name
+     * @return int, the id
+     */
     public int idAccountType(String str) {
         
         int id = 0;
@@ -112,7 +119,11 @@ public class NewAccountWindowController extends ControllerBase {
         return id;
     }
     
-    
+    /**
+     * Method which find the id associated to the country code.
+     * @param str, the country code
+     * @return int, the id
+     */
     public int idCountryCode(String str) {
         int id = 0;
         try {
@@ -132,8 +143,12 @@ public class NewAccountWindowController extends ControllerBase {
         }
         return id;
     }
-    
-    
+   
+    /**
+     * Method which find the id associated to the bank.
+     * @param str, the bank name
+     * @return int, the id
+     */
     public int idBank(String str) {
         int id = 0;
         try {
