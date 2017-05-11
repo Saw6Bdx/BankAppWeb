@@ -161,7 +161,7 @@ public class NewAccountWindow_page3Controller extends NewAccountWindowController
                     if (Valid.isValidPhoneNumber(accountManagerPhone)) {
                         accountManagerBdd.setPhone(accountManagerPhone);
                     }
-                    if (Valid.isValidPhoneNumber(accountManagerEmail)) {
+                    if (Valid.isValidEmail(accountManagerEmail)) {
                         accountManagerBdd.setEmail(accountManagerEmail);
                     }
                     accountManagerBdd.setIdAgency(agencyBdd);
