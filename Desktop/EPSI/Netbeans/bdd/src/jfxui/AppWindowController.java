@@ -112,11 +112,18 @@ public class AppWindowController extends ControllerBase {
     @FXML
     private void handleMenuFileNewUser(ActionEvent event) throws IOException {
 
-        ControllerBase controller = ControllerBase.loadFxml("NewUserWindow.fxml", this.mediator);
+        NewUserWindowController controller = (NewUserWindowController) ControllerBase.loadFxml(
+                "NewUserWindow.fxml", 
+                this.mediator
+        );
+        controller.setFlagHolder(this.flagHolder);
+        //controller.
         Scene scene = new Scene(controller.getParent());
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
+        
+        this.root.getScene().getWindow().hide();
 
     }
 
@@ -170,20 +177,30 @@ public class AppWindowController extends ControllerBase {
     @FXML
     private void handleMenuDeleteAccount(ActionEvent event) throws IOException {
 
-        DeleteAccountWindowController controller = (DeleteAccountWindowController) ControllerBase.loadFxml("DeleteAccountWindow.fxml", this.mediator);
+        DeleteAccountWindowController controller = (DeleteAccountWindowController) ControllerBase.loadFxml(
+                "DeleteAccountWindow.fxml", 
+                this.mediator
+        );
         controller.setFlagHolder(this.flagHolder);
         controller.initDeleteAccountWindow();
         Scene scene = new Scene(controller.getParent());
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
+        
+        this.root.getScene().getWindow().hide();
 
     }
 
     @FXML
     private void handleMenuModifyAccountManager(ActionEvent event) throws IOException {
 
-        ControllerBase controller = ControllerBase.loadFxml("ModifyAccountManagerWindow.fxml", this.mediator);
+        ModifyAccountManagerWindowController controller = (ModifyAccountManagerWindowController) ControllerBase.loadFxml(
+                "ModifyAccountManagerWindow.fxml", 
+                this.mediator
+        );
+        controller.setFlagHolder(this.flagHolder);
+        controller.initModifyAccountManagerWindow();
         Scene scene = new Scene(controller.getParent());
         Stage stage = new Stage();
         stage.setScene(scene);

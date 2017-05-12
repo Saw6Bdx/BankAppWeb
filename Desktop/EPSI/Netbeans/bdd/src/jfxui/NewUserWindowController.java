@@ -7,17 +7,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import db.home.bank.Holder;
 import db.home.bank.Postcode;
@@ -64,6 +60,12 @@ public class NewUserWindowController extends ControllerBase {
     private Button btnCreate;
     @FXML
     private Button btnCancel;
+
+    private int flagHolder;
+
+    public void setFlagHolder(int flagHolder) {
+        this.flagHolder = flagHolder;
+    }
 
     @Override
     public void initialize(Mediator mediator) {
@@ -126,7 +128,7 @@ public class NewUserWindowController extends ControllerBase {
                                         );
                                         Address address = new Address(null, addLine1);
                                         Holder holder = new Holder(null, name, firstName, login, get_SHA_512_SecurePassword(pwd, "1"));
-                                        
+
                                         // Writing info into the database
                                         try {
                                             EntityManager em = getMediator().createEntityManager();
@@ -151,9 +153,18 @@ public class NewUserWindowController extends ControllerBase {
                                             AlertMessage.processPersistenceException(e);
                                         }
 
-                                        // Going to the application main page
-                                        TitledPane loader = (TitledPane) FXMLLoader.load(getClass().getResource("AppWindow.fxml"));
-                                        Scene scene = new Scene(loader);
+                                        //Going to the main page -- Refresh the app
+                                        AppWindowController controller = (AppWindowController) ControllerBase.loadFxml(
+                                                "AppWindow.fxml",
+                                                getMediator()
+                                        );
+
+                                        EntityManager em = getMediator().createEntityManager();
+                                        TypedQuery<Holder> qHolder = em.createQuery("SELECT h FROM Holder h WHERE h.login =:login", Holder.class);
+                                        List<Holder> holderList = qHolder.setParameter("login", login).getResultList();
+                                        controller.setFlagHolder(holderList.get(0).getId());
+                                        controller.initAppWindowController(getMediator());
+                                        Scene scene = new Scene(controller.getParent());
                                         Stage stage = new Stage();
                                         stage.setScene(scene);
                                         stage.show();
@@ -237,6 +248,17 @@ public class NewUserWindowController extends ControllerBase {
         //Close current window
         Stage current = (Stage) this.btnCancel.getScene().getWindow();
         current.close();
+
+        AppWindowController controller = (AppWindowController) ControllerBase.loadFxml(
+                "AppWindow.fxml",
+                getMediator()
+        );
+        controller.setFlagHolder(this.flagHolder);
+        controller.initAppWindowController(getMediator());
+        Scene scene = new Scene(controller.getParent());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
 
     }
 

@@ -83,7 +83,7 @@ public class NewAccountWindow_page3Controller extends NewAccountWindowController
                         EntityManager em = getMediator().createEntityManager();
                         TypedQuery<Postcode> qPostcode = em.createQuery("SELECT a FROM Postcode a WHERE a.postcode=:param", Postcode.class);
                         qPostcode.setParameter("param", getPostcode().getPostcode());
-                        postcodeBdd = qPostcode.getSingleResult();
+                        postcodeBdd = qPostcode.getResultList().get(0);
                     }
 
                     // ... table ADDRESS

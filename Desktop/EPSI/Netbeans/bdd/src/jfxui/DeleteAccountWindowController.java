@@ -11,6 +11,7 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
@@ -84,6 +85,8 @@ public class DeleteAccountWindowController extends ControllerBase {
         Stage current = (Stage) this.btnOK.getScene().getWindow();
         current.close();
 
+        refreshApp();
+
     }
 
     @FXML
@@ -92,7 +95,23 @@ public class DeleteAccountWindowController extends ControllerBase {
         //Close current window
         Stage current = (Stage) this.btnCancel.getScene().getWindow();
         current.close();
+        
+        refreshApp();
 
+    }
+    
+    private void refreshApp() throws IOException {
+        //Refresh the app
+        AppWindowController controller = (AppWindowController) ControllerBase.loadFxml(
+                "AppWindow.fxml",
+                getMediator()
+        );
+        controller.setFlagHolder(this.flagHolder);
+        controller.initAppWindowController(getMediator());
+        Scene scene = new Scene(controller.getParent());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
 
 }
