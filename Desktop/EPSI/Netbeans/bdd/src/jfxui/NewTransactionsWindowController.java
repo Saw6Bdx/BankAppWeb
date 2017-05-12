@@ -219,34 +219,9 @@ public class NewTransactionsWindowController extends ControllerBase {
                         TransactionsBdd.setAmount(Double.parseDouble(transactionsAmount));
                         TransactionsBdd.setLabel(transactionsLabel);
                         TransactionsBdd.setEndDate(transactionsEndDate);
-
-                        // ... table TRANSACTIONTYPE
-                        TransactionType transactionTypeBdd = new TransactionType(
-                                idTransactionType(transactionsType.getType()) == 0 ? null : idTransactionType(transactionsType.getType())
-                        );
-                        transactionTypeBdd.setType(transactionsType.getType());
-
-                        // ... table CATEGORY
-                        Category CategoryBdd = new Category(
-                                idCategory(transactionsCategory.getLabel()) == 0 ? null : idCategory(transactionsCategory.getLabel())
-                        );
-                        CategoryBdd.setLabel(transactionsCategory.getLabel());
-
-                        // ... table ACCOUNT
-                        Account AccountBdd = new Account(
-                                idAccount(transactionsAccount.getNumber()) == 0 ? null : idAccount(transactionsAccount.getNumber())
-                        );
-                        AccountBdd.setNumber(transactionsAccount.getNumber());
-                        AccountBdd.setCreationDate(transactionsAccount.getCreationDate());
-                        AccountBdd.setFirstBalance(transactionsAccount.getFirstBalance());
-                        AccountBdd.setOverdraft(transactionsAccount.getOverdraft());
-                        AccountBdd.setIdAccountType(transactionsAccount.getIdAccountType());
-                        AccountBdd.setIdCountryCode(transactionsAccount.getIdCountryCode());
-                        AccountBdd.setIdAgency(transactionsAccount.getIdAgency());
-
-                        TransactionsBdd.setIdTransactionType(transactionTypeBdd);
-                        TransactionsBdd.setIdAccount(AccountBdd);
-                        TransactionsBdd.setIdCategory(CategoryBdd);
+                        TransactionsBdd.setIdTransactionType(transactionsType);
+                        TransactionsBdd.setIdAccount(transactionsAccount);
+                        TransactionsBdd.setIdCategory(transactionsCategory);
                       
                         EntityManager em = getMediator().createEntityManager();
 
