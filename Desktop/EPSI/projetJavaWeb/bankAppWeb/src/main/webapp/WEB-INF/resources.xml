@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <Resource id="bankAppDataSource" type="javax.sql.DataSource">
+        JdbcDriver com.mysql.jdbc.Driver
+        JdbcUrl jdbc:mysql://localhost:8889/db_home_bank
+        UserName root
+        Password root
+        JtaManaged true
+        defaultAutoCommit false
+    </Resource>     
+</resources>
